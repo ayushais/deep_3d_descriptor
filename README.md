@@ -2,43 +2,83 @@
 
 Code for the paper "Deep3DFeatures: Learning Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training the model, all the training data and a learned model.
-We also provide a c++ library for using the descriptor with PCL
-
+We also provide a c++ library for using the learned descriptor with PCL. This library
+communicates with a Python service using Thrift and this package will install Thirft.
 
 
 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+git clone command goes here
+command for downloading the dataset
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+* [Tensorflow]:(https://www.tensorflow.org/install/install_linux) 
+We recommend installing TensorFlow in a virtual environment
 
-```
-Give examples
-```
+* [PCL]:(https://github.com/PointCloudLibrary/pcl)
+
+* [OpenCV]: (https://github.com/opencv/opencv)
+For both C++ and Python
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+For training and testing the model only TensorFlow is required
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+For using the learned feature descriptor a C++ package has to built
 
 ```
-until finished
+mkdir build
+cmake ..
+make -j8
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+This will install Thirft, build the shared library and also compile the 
+test code for using the library.
 
-## Running the tests
+## Training the model
+
+```
+python siamese.py --filename --path_to_train_hdf5 --path_to_test_hdf5
+
+python siamese.py model ../training_data/ ../testting_data
+
+```
+This command has to be executed in a TensorFlow envionment. 
+
+
+##Using the learned descriptor with PCL
+
+We provide a service and client API for using the learned feature descriptor wit PCL.
+All the Thrift related code and the python service file is in the folder python-cpp
+
+The service is started in Python within the tensorflow environment
+```
+python PythonServer.py --model_name
+
+```
+We provide two test files, the first one for computing a feature descriptor and 
+the second one for matching the descriptors.
+
+For computing feature descriptor 
+```
+
+./compute_deep_3D_feature --path_to_pcd_file  --feature_neighborhood_radius --sampling_radius_for_keypoints
+
+```
+
+For matching feafeature descriptor 
+```
+./visualize_deep_3D_feature_correspondence --path_to_first_pcd_file --sampling_radius_for_first_pcd 
+ --path_to_second_pcd_file --sampling_radius_for_second _pcd --feature_neighborhood_radius 
+ --use_learned_for_matching_or_use_euclidean_distance(1/0)
+
+```
+
+
 
 Explain how to run the automated tests for this system
 
