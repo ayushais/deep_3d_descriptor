@@ -1,0 +1,7 @@
+batch_size 32
+epochs 5
+learning_rate 0.0001
+bneck_size 64
+fc_size 2048
+eta 0.0005
+comment small_architecture
