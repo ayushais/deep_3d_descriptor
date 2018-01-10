@@ -293,68 +293,6 @@ void Deep3DFeature::computeFeature(FeatureCloud &features)
   keypoints_.points.clear();
 
 
-  //ctr = 0;
-/*  for(auto &feature:features.points)*/
-  //{
-
-    //for(size_t i = 0; i < 256 ; ++i)
-    //{
-
-      //std::cout << feature.descriptor[i] << "," << feature_vector[ctr] << std::endl;
-
-      //ctr+=1;
-
-      //getchar();
-
-
-    //}
-
-
-
-  //}
-
-
-
-
-
-  //Eigen::MatrixXd feature_vector_eigen = Eigen::Map<Eigen::MatrixXd>(feature_vector.data(),256,selected_keypoints.size());
-
-
-/*  std::cout << feature_vector_eigen.rows() << std::endl;*/
-  //std::cout << feature_vector_eigen.cols() << std::endl;
-
-
-
-  /*for(size_t i = 0; i < selected_keypoints.size() ; ++i)*/
-    //features.points.push_back(feature_vector_eigen.col(i));
-
-    //std::cout << feature_vector_eigen.col(0)[i] << "," << feature_vector[i] << std::endl;
-
-
-    //getchar();
-
-
-
-
-
-
-  //std::cout << m1.rows << std::endl;
-  //features.resize(selected_keypoints.size());
-
-
-      //Eigen::MatrixXf feature(1,feature_size);
-
-/*  for(auto &feature_element:feature_vector)*/
-  //{
-
-
-
-  //}
-
-
-
-
-
 
 
 

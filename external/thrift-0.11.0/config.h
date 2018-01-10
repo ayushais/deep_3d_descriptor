@@ -13,13 +13,13 @@
 #define ARITHMETIC_RIGHT_SHIFT 1
 
 /* Defines automake version */
-#define AUTOMAKE_VERSION 1.15
+#define AUTOMAKE_VERSION 1.14.1
 
 /* Use *.h extension for parser header file */
 /* #undef BISON_USE_PARSER_H_EXTENSION */
 
 /* Defines bison version */
-#define BISON_VERSION 3.0.4
+#define BISON_VERSION 3.0.2
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -89,7 +89,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the <lauxlib.h> header file. */
-#define HAVE_LAUXLIB_H 1
+/* #undef HAVE_LAUXLIB_H */
 
 /* define if libevent is available */
 #define HAVE_LIBEVENT /**/
@@ -110,13 +110,13 @@
 #define HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the <luaconf.h> header file. */
-#define HAVE_LUACONF_H 1
+/* #undef HAVE_LUACONF_H */
 
 /* Define to 1 if you have the <lualib.h> header file. */
-#define HAVE_LUALIB_H 1
+/* #undef HAVE_LUALIB_H */
 
 /* Define to 1 if you have the <lua.h> header file. */
-#define HAVE_LUA_H 1
+/* #undef HAVE_LUA_H */
 
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
@@ -194,7 +194,7 @@
 /* #undef HAVE_STAT_EMPTY_STRING_BUG */
 
 /* Define to 1 if stdbool.h conforms to C99. */
-/* #undef HAVE_STDBOOL_H */
+#define HAVE_STDBOOL_H 1
 
 /* Define to 1 if you have the <stddef.h> header file. */
 #define HAVE_STDDEF_H 1
@@ -299,7 +299,8 @@
    slash. */
 #define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
 
-/* Define to the sub-directory where libtool stores uninstalled libraries. */
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
 #define LT_OBJDIR ".libs/"
 
 /* Name of package */

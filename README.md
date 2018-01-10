@@ -1,4 +1,4 @@
-# deep_3D_Feature
+# deep_3D_feature
 
 Code for the paper "Deep3DFeatures: Learning Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
@@ -19,7 +19,7 @@ command for downloading the dataset
 
 We recommend installing TensorFlow in a virtual environment
 
-* [PCL]:(https://github.com/PointCloudLibrary/pcl)
+* [PCL 1.8]:(https://github.com/PointCloudLibrary/pcl)
 
 * [OpenCV]: (https://github.com/opencv/opencv)
 
@@ -39,8 +39,13 @@ In the project directory
 
 ```
 mkdir build
-cmake ..
+cmake .. 
 make
+
+```
+In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL installation
+```
+cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 
 ```
 

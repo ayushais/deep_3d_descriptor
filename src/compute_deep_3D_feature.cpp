@@ -55,28 +55,6 @@ int main(int argc,char **argv)
   deep_feature.computeFeature(deep_features);
 
   cout << "total number of features computed are: " << deep_features.points.size() <<endl;
-/*  pcl::CorrespondencesPtr correspondences(new pcl::Correspondences);*/
-  //pcl::registration::CorrespondenceEstimation<DeepFeature256,DeepFeature256> est;
-  //est.setInputSource (deep_features.makeShared());
-  //est.setInputTarget (deep_features.makeShared());
-  //est.determineCorrespondences (*correspondences);
-
-  //for(auto &corr:*correspondences)
-  //{
-    //cout << corr.index_query << "," << corr.index_match << endl;
-    //getchar();
-
-  //}
-
-
-
-
-
-
-
-
-  /*  const size_t patch_width = 64;*/
-  /*const size_t patch_height = 64;*/
 
 
 }

@@ -424,7 +424,7 @@ def main():
     if(num_iteration % model_iteration == 0 and num_iteration > 0):
 
 ###fix the model path
-      model_name = '/home/dewan/code/descriptor_learning/python_scripts/models/' + filename + '_' + str(num_iteration) + '.ckpt'
+      model_name = 'models/' + filename + '_' + str(num_iteration) + '.ckpt'
       saver.save(sess, model_name)
 
 
