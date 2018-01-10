@@ -258,7 +258,7 @@ void Deep3DFeature::computeFeature(FeatureCloud &features)
 
   std::cout << "calling python service for computing features" << std::endl;
 
-  stdcxx::shared_ptr<TSocket> socket(new TSocket("toffifee", 9090));
+  stdcxx::shared_ptr<TSocket> socket(new TSocket("localhost", 9090));
   stdcxx::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   stdcxx::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   getFeaturesClient client(protocol);

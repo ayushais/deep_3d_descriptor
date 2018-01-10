@@ -9,7 +9,7 @@
 #include <pcl/common/common.h>
 #include <opencv2/contrib/contrib.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <thrift/transport/TSocket.h>
+#include "thrift/transport/TSocket.h"
 #include <thrift/transport/TBufferTransports.h>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/stdcxx.h>

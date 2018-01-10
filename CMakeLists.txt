@@ -7,7 +7,6 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  /home/dewan/software/pcl/build/)
 
 project (deep_3D_feature)
 set(PCL_DIR "/export/home/dewan/software/pcl/build/")
-include_directories("/home/dewan/software/gnuplot-iostream/")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build/)
 
@@ -23,22 +22,15 @@ find_package(OpenCV 2.4.8 REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIBRARY_DIRS})
 
-
-
-
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 find_package(Boost REQUIRED COMPONENTS system)
 FIND_PACKAGE ( Threads REQUIRED )
 
 
-set(THRIFT_DIR "/usr/local/include/thrift")
+set(THRIFT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/include/)
 include_directories(${THRIFT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/python-cpp/gen-cpp)
-link_directories(/usr/local/lib)
-
-
-include_directories("/usr/include/eigen3/")
-
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/lib/)
 find_package(OpenMP)
 if (OPENMP_FOUND)
        set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")

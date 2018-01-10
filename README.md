@@ -2,7 +2,7 @@
 
 Code for the paper "Deep3DFeatures: Learning Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
-the feature descriptors. We also provide a C++ library for using the learned descriptor with PCL. 
+the feature descriptors. We also provide a C++ library for using the learned features descriptor with PCL. 
 
 
 
@@ -27,18 +27,22 @@ For both C++ and Python
 
 ### Installing
 
-For training and testing the model only TensorFlow is required
+Install thrift
 
-For using the learned feature build the C++ source code
+```
+cd external
+./install_thrift.sh
+
+```
+
+In the project directory
 
 ```
 mkdir build
 cmake ..
-make -j8
-```
+make
 
-This will install Thirft, build the shared library and also compile the 
-test code for using the library.
+```
 
 ## Training the model
 
@@ -48,14 +52,13 @@ python siamese.py --filename --path_to_train_hdf5 --path_to_test_hdf5
 ```
 This command has to be executed in a TensorFlow envionment. 
 
-
 ## Using the learned descriptor with PCL
 
 We provide a service and client API for using the learned feature descriptor with PCL.
 
 All the Thrift related code and the python service file is in the folder python-cpp
 
-The service is started in Python within the tensorflow environment
+The service has to be started within the tensorflow environment
 ```
 python PythonServer.py --model_name
 
@@ -65,7 +68,6 @@ the second one for matching the descriptors.
 
 For computing feature descriptor 
 ```
-
 ./compute_deep_3D_feature --path_to_pcd_file  --feature_neighborhood_radius --sampling_radius_for_keypoints
 
 ```

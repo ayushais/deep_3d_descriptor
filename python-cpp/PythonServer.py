@@ -4,6 +4,7 @@ from __future__ import division
 from __future__ import print_function
 import sys
 sys.path.append('gen-py')
+sys.path.append('../external/thrift-0.11.0/lib/python2.7/site-packages')
 from pythonCpp import getFeatures
 from pythonCpp.ttypes import *
 from thrift.transport import TSocket
@@ -163,7 +164,7 @@ def main():
   script,model = argv
   handler = getFeaturesHandler(model)
   processor = getFeatures.Processor(handler)
-  transport = TSocket.TServerSocket('toffifee',9090)
+  transport = TSocket.TServerSocket('localhost',9090)
   tfactory = TTransport.TBufferedTransportFactory()
   pfactory = TBinaryProtocol.TBinaryProtocolFactory()
   import logging
