@@ -188,22 +188,6 @@ class Siamese:
         with tf.variable_scope(name):
             return tf.nn.max_pool(bottom, ksize=[1, k_size_v, k_size_h, 1],
                         strides=[1, stride_v, stride_h, 1], padding='SAME')
-    def contrastive_loss(self):
-
-        d = tf.reduce_sum(tf.square(self.bneck_1 - self.bneck_2),1)
-
-        d_sqrt = tf.sqrt(d)
-        print(self.bneck_1.shape)
-        print(d.shape)
-        print(d_sqrt.shape)
-        print(self.tf_train_labels.shape)
-
-        margin = 0.2
-        loss = tf.multiply(self.tf_train_labels[:,1],tf.square(tf.maximum(0.,margin - d_sqrt))) + \
-                tf.multiply(self.tf_train_labels[:,0],d)
-
-        return(0.5 * tf.reduce_mean(loss))
-
 
 ##loss function with l2 weight regularization
     def loss_function_cross_entropy(self):
@@ -370,7 +354,7 @@ def accuracy(predictions, labels):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/predictions.shape[0])
 
 def main():
-  script,filename,train_hdf5_path,test_hdf5_path = argv
+  script,filename,train_hdf5_path,test_hdf5_path,save_model_path = argv
   siamese_object = Siamese(filename)
   
   sess = tf.InteractiveSession()
@@ -424,24 +408,24 @@ def main():
     if(num_iteration % model_iteration == 0 and num_iteration > 0):
 
 ###fix the model path
-      model_name = 'models/' + filename + '_' + str(num_iteration) + '.ckpt'
+      model_name = save_model_path + filename + '_' + str(num_iteration) + '.ckpt'
       saver.save(sess, model_name)
 
 
   loss_val_train = np.array(loss_val_train)
-  filename_save = "results/" + filename + "_train_loss.txt"
+  filename_save = save_model_path + filename + "_train_loss.txt"
   np.savetxt(filename_save,loss_val_train,fmt="%10.5f")
   
   loss_val_test = np.array(loss_val_test)
-  filename_save = "results/" + filename + "_test_loss.txt"
+  filename_save = save_model_path + filename + "_test_loss.txt"
   np.savetxt(filename_save,loss_val_test,fmt="%10.5f")
   
   accuracy_train = np.array(accuracy_train)
-  filename_save = "results/" + filename + "_train_accuracy.txt"
+  filename_save = save_model_path + filename + "_train_accuracy.txt"
   np.savetxt(filename_save,accuracy_train,fmt="%10.5f")
 
   accuracy_test = np.array(accuracy_test)
-  filename_save = "results/" + filename + "_test_accuracy.txt"
+  filename_save = save_model_path + filename + "_test_accuracy.txt"
   np.savetxt(filename_save,accuracy_test,fmt="%10.5f")
  
 
