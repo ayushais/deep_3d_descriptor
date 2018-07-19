@@ -57,17 +57,16 @@ class inference_net:
       return(fc)
     
   def inference_layer(self,bottom,output,name):
-      with tf.variable_scope(name):
-          input_shape = bottom.shape.as_list()
-          input_shape_flattened = functools.reduce(operator.mul,input_shape[1:len(input_shape)], 1)
-          weight_name = name + "/W_fc:0"
-          W_fc = self.graph.get_tensor_by_name(weight_name)
-          bias_name = name + "/bias:0"
-          b_fc = self.graph.get_tensor_by_name(bias_name)
-          x = tf.reshape(bottom, [-1, input_shape_flattened])
-          fc = tf.nn.bias_add(tf.matmul(x, W_fc), b_fc)
-          return(fc)
-
+    with tf.variable_scope(name):
+      input_shape = bottom.shape.as_list()
+      input_shape_flattened = functools.reduce(operator.mul,input_shape[1:len(input_shape)], 1)
+      weight_name = name + "/W_fc:0"
+      W_fc = self.graph.get_tensor_by_name(weight_name)
+      bias_name = name + "/bias:0"
+      b_fc = self.graph.get_tensor_by_name(bias_name)
+      x = tf.reshape(bottom, [-1, input_shape_flattened])
+      fc = tf.nn.bias_add(tf.matmul(x, W_fc), b_fc)
+      return(fc)
 
   def metric_model(self,feature_1,feature_2):
       self.bneck_combined = tf.concat((feature_1,feature_2),axis=1)
@@ -80,7 +79,6 @@ class inference_net:
   def bias_variable(self,shape):
       initial = tf.constant(0.1, shape=shape,name="bias")
       return tf.Variable(initial)
-
 class getFeaturesHandler:
   def __init__(self,model):
     self.log = {}
@@ -92,12 +90,8 @@ class getFeaturesHandler:
     self.patch_size = 64
     self.feature_size = 256
 
-
     print('model_loaded')
-
     self.inference_object = inference_net(self.feature_size,self.graph)
-      
-
  
   def matchFeatures(self,feature_1,feature_2):
     feature_1 = np.array(feature_1)
@@ -134,8 +128,10 @@ class getFeaturesHandler:
           patch_size],[self.patch_size,self.patch_size])
 
     print("end with patches")
+    input_patches = input_patches[:,:,:,[0,2]]
     input_x1 = self.graph.get_tensor_by_name("input_x1:0")
     keep_prob = self.graph.get_tensor_by_name("keep_prob:0")
+    is_training = self.graph.get_tensor_by_name("is_training:0")
     bottleneck =  self.graph.get_tensor_by_name("siamese/bottleneck:0")
     step_size = 512
 
@@ -146,13 +142,13 @@ class getFeaturesHandler:
       else:
         step = number_patches - index_patch
       input_patches_batch = input_patches[index_patch:index_patch+step,:,:,:]
-      input_patches_batch = np.reshape(input_patches_batch,(step,self.patch_size,self.patch_size,3))
-      normalize_subtract = np.ones((step,self.patch_size,self.patch_size,3),dtype=np.float)
+      input_patches_batch = np.reshape(input_patches_batch,(step,self.patch_size,self.patch_size,2))
+      normalize_subtract = np.ones((step,self.patch_size,self.patch_size,2),dtype=np.float)
       normalize_subtract[:,:,:,0] = 4.15
-      normalize_subtract[:,:,:,1] = 8.33
-      normalize_subtract[:,:,:,2] = 7.55
+#      normalize_subtract[:,:,:,1] = 8.33
+      normalize_subtract[:,:,:,1] = 7.55
       input_patches_batch = np.subtract(input_patches_batch,normalize_subtract)
-      feed_dict = {input_x1:input_patches_batch,keep_prob: 1.0}
+      feed_dict = {input_x1:input_patches_batch,keep_prob: 1.0,is_training:True}
 
       feature_1 = self.session.run(bottleneck,feed_dict=feed_dict)
       feature[index_patch:index_patch + step,:] = feature_1
