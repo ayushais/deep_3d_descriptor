@@ -57,7 +57,7 @@ This will download the test pointcloud files
 ## Downloading the models
 
 ```
-./download_dataset.sh
+./download_models.sh
 ```
 This will download the trained model file
 
