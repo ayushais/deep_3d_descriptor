@@ -45,13 +45,13 @@ add_library(matchdeep3dfeature SHARED src/match_deep_3D_feature.cpp)
 target_link_libraries(matchdeep3dfeature thrift ${PCL_LIBRARIES})
 
 add_executable(compute_deep_3D_feature src/compute_deep_3D_feature.cpp)
-target_link_libraries(compute_deep_3D_feature ${PCL_LIBRARIES} deep3dfeature.so)
-add_dependencies(compute_deep_3D_feature deep3dfeature.so)
+target_link_libraries(compute_deep_3D_feature ${PCL_LIBRARIES} deep3dfeature)
+add_dependencies(compute_deep_3D_feature deep3dfeature)
 
 
 add_executable(visualize_deep_3D_feature_correspondence src/visualize_deep_3D_feature_correspondence.cpp)
-target_link_libraries(visualize_deep_3D_feature_correspondence ${PCL_LIBRARIES} deep3dfeature.so matchdeep3dfeature.so)
-add_dependencies(visualize_deep_3D_feature_correspondence deep3dfeature.so matchdeep3dfeature.so)
+target_link_libraries(visualize_deep_3D_feature_correspondence ${PCL_LIBRARIES} deep3dfeature matchdeep3dfeature)
+add_dependencies(visualize_deep_3D_feature_correspondence deep3dfeature matchdeep3dfeature)
 
 
 

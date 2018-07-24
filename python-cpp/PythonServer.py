@@ -16,15 +16,12 @@ import functools
 import argparse
 import sys
 from sys import argv
-import h5py
 import random
-import matplotlib.pyplot as plt
 import numpy as np
 import numpy.matlib
 import cv2
 import tensorflow as tf
 from sys import argv
-from joblib import Parallel, delayed
 import multiprocessing
 import time
 import socket

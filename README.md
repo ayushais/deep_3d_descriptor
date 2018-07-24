@@ -35,6 +35,13 @@ cd external
 
 ```
 
+In the Tensorflow environment
+```
+pip install thrift
+
+```
+
+
 In the project directory
 
 ```
