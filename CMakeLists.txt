@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-SET(CMAKE_BUILD_TYPE Release)
+SET(CMAKE_BUILD_TYPE Debug)
 project (deep_3D_feature)
 SET(PCL_DIR "" CACHE STRING "path to PCLConfig.cmake for 1.8")
 

@@ -6,16 +6,16 @@ using namespace apache::thrift::transport;
 
 Deep3DFeature::Deep3DFeature(){}
 
-
-
 void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std::vector<cv::Mat>&image_patches_vector)
 {
   std::vector<cv::Mat>vecD_initial;
   vecD_initial.resize(keypoints_.points.size());
+
+
   #pragma omp parallel for
   for(size_t p = 0; p < keypoints_.points.size();++p)
   {
-    IntensityPoint point = keypoints_.points[p];
+    pcl::PointXYZI point = keypoints_.points[p];
     Eigen::Vector4f min_vec_big,max_vec_big;
     float min_x = point.x - (nb_radius_/2);
     float max_x = point.x + (nb_radius_/2);
@@ -43,8 +43,6 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
     std::vector<int>indices;
     pcl::getPointsInBox(cloud_,min_vec_big,max_vec_big,indices);
     IntensityCloud cloud_box;
-
- ///get the points in the cube
     pcl::copyPointCloud(cloud_,indices,cloud_box);
 ///if number of points in the cube is too less then descriptor would be
 //inaccurate due to lack of local surface
@@ -60,14 +58,14 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
 
     ///All the voxels outside the cuboid(min cloud and max cloud) are empty
 
-
-
-    cv::Mat image_patch(patch_size,patch_size,CV_32FC3,cv::Scalar(0,0,0));
+    cv::Mat image_patch(patch_size,patch_size,CV_32FC(2),cv::Scalar(0,0));
     int count_detected = 0;
-    //int ctr = 0;
     std::stringstream ss;
-
     ///outerloop for iterating over y direction
+
+
+
+    //std::cout << "here" << std::endl;
     for(size_t i = 1; i <= patch_size;i++)
     {
       float voxel_max_z = voxel_min_z + step_size;
@@ -124,9 +122,7 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
             max_vec[1] < min_cloud[1]||min_vec[1] > max_cloud[1])
         {
           voxel_min_y = voxel_max_y;
-
           continue;
-
         }
 
         //indices.clear();
@@ -136,18 +132,13 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
 
         if(indices_bbox.empty())
         {
-
           count_empty+=1;
           voxel_min_y = voxel_max_y;
-
           continue;
-
-
         }
 
 
         float avg_depth = 0.;
-        float avg_height = 0.;
         float avg_intensity = 0.;
 
         ///Estimate the average depth, intensity and height of a point
@@ -155,26 +146,18 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
         {
           Eigen::Vector3f point_vec = cloud_slice.points[index].getVector3fMap();
           avg_depth += point_vec.lpNorm<2>();
-          pcl::PointXYZI point = cloud_.points[indices[indices_slice[index]]];
-
-          float height = (point.z + abs(min_val)) / (max_val + abs(min_val));
-          avg_height += height;
-
-          avg_intensity += point.intensity;
+          pcl::PointXYZI point_slice = cloud_.points[indices[indices_slice[index]]];
+          //avg_intensity += point_slice.intensity;
         }
-
-
         avg_depth/=indices_bbox.size();
-        avg_height/=indices_bbox.size();
         avg_intensity/=indices_bbox.size();
 /// normalize the depth so that it is defined w.r.t to the neighourhood
 //and not with respect to the sensor
         float depth_pixel = (min_depth - avg_depth)/(min_depth - max_depth);
 
 ////store the values in the image
-        image_patch.at<cv::Vec3f>(63-(i-1),63-(k-1))[2] = depth_pixel;
-        image_patch.at<cv::Vec3f>(63-(i-1),63-(k-1))[1] = avg_height;
-        image_patch.at<cv::Vec3f>(63-(i-1),63-(k-1))[0] = avg_intensity;
+        image_patch.at<cv::Vec2f>(63-(i-1),63-(k-1))[1] = depth_pixel;
+        image_patch.at<cv::Vec2f>(63-(i-1),63-(k-1))[0] = avg_intensity;
 
         voxel_min_y = voxel_max_y;
         //ctr+=1;
@@ -184,9 +167,8 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
       }
 
        vecD_initial[p] = image_patch;
-
+       cloud_box.points.clear();
   }
-
   size_t count_zeros = 0;
   size_t ctr = 0;
   for(auto &image_patch:vecD_initial)
@@ -204,7 +186,7 @@ void Deep3DFeature::get_image_patch(const float min_val,const float max_val,std:
       selected_keypoints_.points.push_back(keypoints_.points[ctr]);
       cv::Mat image_patch_8bit;
       cv::convertScaleAbs(image_patch,image_patch_8bit,255,0);
-      cv::Mat image_patch_float(64,64,CV_64FC3,cv::Scalar(0.0));
+      cv::Mat image_patch_float(patch_size,patch_size,CV_64FC2,cv::Scalar(0.0));
       image_patch_8bit.convertTo(image_patch_float,CV_64F,1.0);
       image_patches_vector.push_back(image_patch_float);
 
@@ -264,12 +246,12 @@ void Deep3DFeature::computeFeature(FeatureCloud &features)
   getFeaturesClient client(protocol);
   transport->open();
   size_t ctr = 0;
-  std::vector<double>patch_vector (selected_keypoints_.size() * patch_size * patch_size * 3);
+  std::vector<double>patch_vector(selected_keypoints_.size() * patch_size * patch_size * 2);
   for(auto &image_patch:keypoint_image_patches)
   {
-    cv::Mat split_image_patch[3];
+    cv::Mat split_image_patch[2];
     cv::split(image_patch,split_image_patch);
-    for(size_t channel = 0; channel < 3; ++channel)
+    for(size_t channel = 0; channel < 2; ++channel)
     {
       std::copy(split_image_patch[channel].begin<double>(),split_image_patch[channel].end<double>(),patch_vector.begin() + (ctr * 64 * 64));
       ctr+=1;

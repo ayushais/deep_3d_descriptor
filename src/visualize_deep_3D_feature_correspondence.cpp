@@ -131,14 +131,6 @@ int main(int argc,char **argv)
   pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> green(input_cloud_target, 0, 102, 0);
   viewer->addPointCloud<IntensityPoint>(input_cloud_source,green,"input_cloud_source");
   viewer->addPointCloud<IntensityPoint>(input_cloud_target,purple,"input_cloud_target");
-
-
-  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZI> color_kp_1(selected_keypoints_source.makeShared(), 255, 0, 0);
-  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZI> color_kp_2(selected_keypoints_target.makeShared(), 255, 0, 0);
-  viewer->addPointCloud<pcl::PointXYZI>(selected_keypoints_source.makeShared(),color_kp_1,"selected_keypoints_source");
-  viewer->addPointCloud<pcl::PointXYZI>(selected_keypoints_target.makeShared(),color_kp_2,"selected_keypoints_target");
-  viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 8, "selected_keypoints_source");
-  viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 8, "selected_keypoints_target");
   viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_source");
   viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
   viewer->setBackgroundColor(255,255,255);

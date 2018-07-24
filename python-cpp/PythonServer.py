@@ -117,18 +117,18 @@ class getFeaturesHandler:
   def returnFeature(self,input_patch_vector):
 
     input_patch_vector = np.array(input_patch_vector)
-    number_patches = np.int(input_patch_vector.shape[0]/(self.patch_size*self.patch_size*3))
-    input_patches = np.zeros([number_patches,self.patch_size,self.patch_size,3],np.float64)
+    number_patches = np.int(input_patch_vector.shape[0]/(self.patch_size*self.patch_size*2))
+    input_patches = np.zeros([number_patches,self.patch_size,self.patch_size,2],np.float64)
     patch_size = self.patch_size * self.patch_size
     print("start with patches")
     for patch in range (0,number_patches):
-      for channel in range(0,3):
-        start_index = (3 * patch) + channel
+      for channel in range(0,2):
+        start_index = (2 * patch) + channel
         input_patches[patch,:,:,channel] = np.reshape(input_patch_vector[start_index * patch_size:(start_index * patch_size) +
           patch_size],[self.patch_size,self.patch_size])
 
     print("end with patches")
-    input_patches = input_patches[:,:,:,[0,2]]
+    # input_patches = input_patches[:,:,:,
     input_x1 = self.graph.get_tensor_by_name("input_x1:0")
     keep_prob = self.graph.get_tensor_by_name("keep_prob:0")
     is_training = self.graph.get_tensor_by_name("is_training:0")
@@ -145,7 +145,6 @@ class getFeaturesHandler:
       input_patches_batch = np.reshape(input_patches_batch,(step,self.patch_size,self.patch_size,2))
       normalize_subtract = np.ones((step,self.patch_size,self.patch_size,2),dtype=np.float)
       normalize_subtract[:,:,:,0] = 4.15
-#      normalize_subtract[:,:,:,1] = 8.33
       normalize_subtract[:,:,:,1] = 7.55
       input_patches_batch = np.subtract(input_patches_batch,normalize_subtract)
       feed_dict = {input_x1:input_patches_batch,keep_prob: 1.0,is_training:True}
