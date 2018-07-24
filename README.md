@@ -85,7 +85,7 @@ All the Thrift related code and the python service file is in the folder python-
 
 The service has to be started within the tensorflow environment
 ```
-python PythonServer.py --model_name
+python PythonServer.py --model_name --using_hinge_loss_model(1/0)
 
 ```
 We provide two test files, the first one for computing a feature descriptor and 
@@ -105,17 +105,31 @@ For matching feafeature descriptor
 
 ```
 
-### Example for visualizing the estimated feature correspondences
+### Example for visualizing the estimated feature correspondences. The correspondences are estimated using the metric learned by the network
+
 
 In the Tensorflow environment. PythonServer.py is in the python-cpp folder
 
 ```
-python PythonServer.py ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt
+python PythonServer.py ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt 0
 
 ```
 
 ```
 ./visualize_deep_3D_feature_correspondence ../test_pcd/0011_1_2_object.pcd 0.2 ../test_pcd/0011_2_2_object.pcd 0.1 1.6 1
+
+```
+### Example for visualizing the estimated feature correspondences. The correspondences are estimated using Euclidean distance
+
+
+In the Tensorflow environment. PythonServer.py is in the python-cpp folder
+
+```
+python PythonServer.py ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt 1
+
+```
+```
+./visualize_deep_3D_feature_correspondence ../test_pcd/0011_1_2_object.pcd 0.2 ../test_pcd/0011_2_2_object.pcd 0.1 1.6 0
 
 ```
 

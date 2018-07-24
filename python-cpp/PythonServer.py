@@ -77,7 +77,7 @@ class inference_net:
       initial = tf.constant(0.1, shape=shape,name="bias")
       return tf.Variable(initial)
 class getFeaturesHandler:
-  def __init__(self,model):
+  def __init__(self,model,is_hinge_loss):
     self.log = {}
     self.session = tf.Session()
     model_graph = model + '.meta'
@@ -86,6 +86,7 @@ class getFeaturesHandler:
     self.graph = tf.get_default_graph()
     self.patch_size = 64
     self.feature_size = 256
+    self.is_hinge_loss = int(is_hinge_loss)
 
     print('model_loaded')
     self.inference_object = inference_net(self.feature_size,self.graph)
@@ -129,7 +130,11 @@ class getFeaturesHandler:
     input_x1 = self.graph.get_tensor_by_name("input_x1:0")
     keep_prob = self.graph.get_tensor_by_name("keep_prob:0")
     is_training = self.graph.get_tensor_by_name("is_training:0")
-    bottleneck =  self.graph.get_tensor_by_name("siamese/bottleneck:0")
+
+    if(self.is_hinge_loss == 1):
+      bottleneck =  self.graph.get_tensor_by_name("siamese/bottleneck/Relu:0")
+    else:
+      bottleneck =  self.graph.get_tensor_by_name("siamese/bottleneck:0")
     step_size = 512
 
     feature = np.zeros((number_patches,self.feature_size),np.float64)
@@ -153,8 +158,8 @@ class getFeaturesHandler:
     return(np.reshape(feature,[-1]))
 def main():
 
-  script,model = argv
-  handler = getFeaturesHandler(model)
+  script,model,is_hinge_loss = argv
+  handler = getFeaturesHandler(model,is_hinge_loss)
   processor = getFeatures.Processor(handler)
   transport = TSocket.TServerSocket('localhost',9090)
   tfactory = TTransport.TBufferedTransportFactory()

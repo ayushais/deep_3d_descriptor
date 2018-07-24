@@ -117,11 +117,45 @@ int main(int argc,char **argv)
 
   else
   {
-    cout << "using euclidean distance for matching features" << endl;
-    pcl::registration::CorrespondenceEstimation<DeepFeature256,DeepFeature256> est;
-    est.setInputSource (deep_features_source.makeShared());
-    est.setInputTarget (deep_features_target.makeShared());
-    est.determineCorrespondences (correspondences);
+
+    for(size_t index_source = 0; index_source < deep_features_source.points.size(); ++index_source)
+    {
+      float min_distance = std::numeric_limits<float>::max();
+      int min_index = -1;
+      for(size_t index_target = 0; index_target < deep_features_target.points.size(); ++index_target)
+      {
+
+
+        float distance = pcl::L2_Norm(deep_features_source.points[index_source].descriptor,
+            deep_features_target.points[index_target].descriptor,256);
+        if(distance < min_distance)
+        {
+          min_index = index_target;
+          min_distance = distance;
+
+        }
+
+
+/*        cout <<  << endl;*/
+
+        /*getchar();*/
+
+
+
+      }
+
+      pcl::Correspondence corr;
+      corr.index_query = index_source;
+      corr.index_match = min_index;
+      correspondences.push_back(corr);
+
+
+    }
+/*    cout << "using euclidean distance for matching features" << endl;*/
+    //pcl::registration::CorrespondenceEstimation<DeepFeature256,DeepFeature256> est;
+    //est.setInputSource (deep_features_source.makeShared());
+    //est.setInputTarget (deep_features_target.makeShared());
+    /*est.determineCorrespondences (correspondences);*/
   }
 
   boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(
@@ -144,6 +178,8 @@ int main(int argc,char **argv)
 
     ss.str("");
     ss << "line_" << ctr;
+/*    cout << corr.index_query << "," << corr.index_match << endl;*/
+    /*getchar();*/
     viewer->addLine(selected_keypoints_source.points[corr.index_query],selected_keypoints_target.points[corr.index_match],255,0,0,ss.str());
 
     ctr+=1;
