@@ -46,8 +46,21 @@ make
 In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL installation
 ```
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
+```
+
+## Downloading the dataset
 
 ```
+./download_dataset.sh
+```
+This will download the test pointcloud files
+## Downloading the models
+
+```
+./download_dataset.sh
+```
+This will download the trained model file
+
 
 ## Training the model
 
@@ -82,6 +95,20 @@ For matching feafeature descriptor
 ./visualize_deep_3D_feature_correspondence --path_to_first_pcd_file --sampling_radius_for_first_pcd 
  --path_to_second_pcd_file --sampling_radius_for_second _pcd --feature_neighborhood_radius 
  --use_learned_for_matching_or_use_euclidean_distance(1/0)
+
+```
+
+### Example for visualizing the estimated feature correspondences
+
+In the Tensorflow environment. PythonServer.py is in the python-cpp folder
+
+```
+python PythonServer.py ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt
+
+```
+
+```
+./visualize_deep_3D_feature_correspondence ../test_pcd/0011_1_2_object.pcd 0.2 ../test_pcd/0011_2_2_object.pcd 0.1 1.6 1
 
 ```
 
