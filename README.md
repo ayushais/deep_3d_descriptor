@@ -99,9 +99,9 @@ For computing feature descriptor
 
 For matching feafeature descriptor 
 ```
-./visualize_deep_3D_feature_correspondence --path_to_first_pcd_file --sampling_radius_for_first_pcd 
- --path_to_second_pcd_file --sampling_radius_for_second _pcd --feature_neighborhood_radius 
- --use_learned_for_matching_or_use_euclidean_distance(1/0)
+./visualize_deep_3D_feature_correspondence --path_to_source_pcd_file --sampling_radius_source 
+ --path_to_target_pcd_file --sampling_radius_target --feature_neighborhood_radius 
+ --use_learned_for_matching_or_Euclidean_distance(1/0)
 
 ```
 

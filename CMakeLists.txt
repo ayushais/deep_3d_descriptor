@@ -38,20 +38,20 @@ set(BASE_SOURCE_FILES python-cpp/gen-cpp/getFeatures.cpp python-cpp/gen-cpp/pyth
   python-cpp/gen-cpp/pythonCpp_constants.cpp)
 #set(CLIENT_FILES src/estimate_input_patch.cpp)
 
-add_library(deep3dfeature SHARED src/deep_3D_feature.cpp ${BASE_SOURCE_FILES})
-target_link_libraries(deep3dfeature thrift ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
+add_library(deep3ddescriptor SHARED src/deep_3D_descriptor.cpp ${BASE_SOURCE_FILES})
+target_link_libraries(deep3ddescriptor thrift ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_library(matchdeep3dfeature SHARED src/match_deep_3D_feature.cpp)
-target_link_libraries(matchdeep3dfeature thrift ${PCL_LIBRARIES})
+add_library(matchdeep3ddescriptor SHARED src/match_deep_3D_descriptor.cpp)
+target_link_libraries(matchdeep3ddescriptor thrift ${PCL_LIBRARIES})
 
-add_executable(compute_deep_3D_feature src/compute_deep_3D_feature.cpp)
-target_link_libraries(compute_deep_3D_feature ${PCL_LIBRARIES} deep3dfeature)
-add_dependencies(compute_deep_3D_feature deep3dfeature)
+add_executable(compute_deep_3D_descriptor src/compute_deep_3D_descriptor.cpp)
+target_link_libraries(compute_deep_3D_descriptor ${PCL_LIBRARIES} deep3ddescriptor)
+add_dependencies(compute_deep_3D_descriptor deep3ddescriptor)
 
 
-add_executable(visualize_deep_3D_feature_correspondence src/visualize_deep_3D_feature_correspondence.cpp)
-target_link_libraries(visualize_deep_3D_feature_correspondence ${PCL_LIBRARIES} deep3dfeature matchdeep3dfeature)
-add_dependencies(visualize_deep_3D_feature_correspondence deep3dfeature matchdeep3dfeature)
+add_executable(visualize_deep_3D_descriptor_correspondence src/visualize_deep_3D_descriptor_correspondence.cpp)
+target_link_libraries(visualize_deep_3D_descriptor_correspondence ${PCL_LIBRARIES} deep3ddescriptor matchdeep3ddescriptor)
+#add_dependencies(visualize_deep_3D_descriptor_correspondence deep3ddescriptor matchdeep3ddescriptor)
 
 
 
