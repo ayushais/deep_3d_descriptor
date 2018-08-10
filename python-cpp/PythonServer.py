@@ -158,7 +158,17 @@ class getFeaturesHandler:
     return(np.reshape(feature,[-1]))
 def main():
 
-  script,model,is_hinge_loss = argv
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--model_name")
+  parser.add_argument("--use_hinge_loss")
+  args = parser.parse_args()
+  if args.model_name:
+    model = args.model_name
+  if args.use_hinge_loss:
+    is_hinge_loss = args.use_hinge_loss
+
+
+ #  script,model,is_hinge_loss = argv
   handler = getFeaturesHandler(model,is_hinge_loss)
   processor = getFeatures.Processor(handler)
   transport = TSocket.TServerSocket('localhost',9090)
@@ -169,7 +179,7 @@ def main():
   server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
   # print "Starting python server..."
   server.serve()
-  # print "done!"
+##  print "done!"
 
 if __name__ == '__main__':
   main()

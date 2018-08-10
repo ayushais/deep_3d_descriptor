@@ -111,12 +111,27 @@ For matching feafeature descriptor
 In the Tensorflow environment. PythonServer.py is in the python-cpp folder
 
 ```
-python PythonServer.py ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt 0
+python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt --use_hinge_loss 0
 
 ```
 
 ```
 ./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1
+
+```
+
+### Example for visualizing the estimated feature correspondences. The correspondences are estimated using Euclidean distance
+
+
+In the Tensorflow environment. PythonServer.py is in the python-cpp folder
+
+```
+python PythonServer.py --model_name ../models/deep_3d_descriptor_hinge_loss/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
+
+```
+
+```
+./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0
 
 ```
 
@@ -174,37 +189,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
-
-
-
-
-
-
-
-The package provides the code for the following things:
-
-1. Learning a feature descriptor for 3D LiDAR scans
-2. A library for using learned descriptor with PCL
-
-
-###Files for learning the feature descriptor:
-
-
-python_scripts/siamese.py: file used for training the deep neural network using TensorFlow
-
-python siamese.py --filename --path_to_train_hdf5_file --path_to_test_hdf5_file
-
-
-
-  
-
-
-
-
-
-
-
-
 
 
 
