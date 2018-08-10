@@ -184,7 +184,7 @@ int main(int argc,char **argv)
 
 
         float distance = pcl::L2_Norm(deep_features_source.points[index_source].descriptor,
-            deep_features_target.points[index_target].descriptor,256);
+            deep_features_target.points[index_target].descriptor,kDescriptorSize);
         if(distance < min_distance)
         {
           min_index = index_target;
