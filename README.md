@@ -85,7 +85,7 @@ All the Thrift related code and the python service file is in the folder python-
 
 The service has to be started within the tensorflow environment
 ```
-python PythonServer.py --model_name --using_hinge_loss_model(1/0)
+python PythonServer.py --model_name --using_hinge_loss
 
 ```
 We provide two test files, the first one for computing a feature descriptor and 
