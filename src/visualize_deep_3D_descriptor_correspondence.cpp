@@ -3,7 +3,6 @@
 #include <pcl/filters/uniform_sampling.h>
 #include <pcl/registration/correspondence_estimation.h>
 #include <pcl/visualization/pcl_visualizer.h>
-using namespace std;
 
 int main(int argc,char **argv)
 {
@@ -11,7 +10,7 @@ int main(int argc,char **argv)
   {
     cerr << "The input is path to the first pointcloud, sampling radius for the first pointcloud" <<
       " path to the second pointcloud, sampli radius for the second poincloud, neighourhood radius and " <<
-      " and 1/0 for using metric learning for matching or match features using euclidean distance" << endl;
+      " and 1/0 for using metric learning for matching or match features using euclidean distance" << std::endl;
 
 
     return(1);
@@ -20,6 +19,7 @@ int main(int argc,char **argv)
   float sampling_radius_target;
   float neighbourhood_radius;
   int use_metric;
+  int use_ransac;
   boost::filesystem::path input_path_source;
   boost::filesystem::path input_path_target;
 
@@ -75,28 +75,36 @@ int main(int argc,char **argv)
     use_metric = atoi(argv[pcl::console::find_argument(argc, argv, "--use_learned_metric")+1]);
   else
   {
-    std::cerr << "metric choice not given" << std::endl;
+    std::cerr << "metric option not given" << std::endl;
+    return(1);
+  }
+  if(pcl::console::find_argument(argc, argv, "--use_ransac") >= 0)
+    use_ransac = atoi(argv[pcl::console::find_argument(argc, argv, "--use_ransac")+1]);
+  else
+  {
+    std::cerr << "ransac option not given" << std::endl;
     return(1);
   }
 
   pcl::PCDReader reader;
   pcl::PCDWriter writer;
-  string pointcloud_path = input_path_source.string();
-  string filename = input_path_source.filename().string();
+  std::string pointcloud_path = input_path_source.string();
+
+  std::string filename = input_path_source.filename().string();
   size_t found = filename.find(".pcd");
   if(found == -1)
   {
-    cerr << "the first input file is not a pcd file" << endl;
+    cerr << "the first input file is not a pcd file" << std::endl;
     return(1);
 
   }
 
   IntensityCloud::Ptr input_cloud_source(new IntensityCloud);
   reader.read(pointcloud_path,*input_cloud_source);
-  cout << "first cloud loaded with " << input_cloud_source->points.size()  << " number of points" << endl;
+  std::cout << "first cloud loaded with " << input_cloud_source->points.size()  << " number of points" << std::endl;
   if(input_cloud_source->points.empty())
   {
-    cerr << "path might be wrong because the first pointcloud is empty" << endl;
+    cerr << "path might be wrong because the first pointcloud is empty" << std::endl;
     return(1);
 
   }
@@ -106,18 +114,18 @@ int main(int argc,char **argv)
   found = filename.find(".pcd");
   if(found == -1)
   {
-    cerr << "the second input file is not a pcd file" << endl;
+    cerr << "the second input file is not a pcd file" << std::endl;
     return(1);
 
   }
   IntensityCloud::Ptr input_cloud_target(new IntensityCloud);
   reader.read(pointcloud_path,*input_cloud_target);
-  cout << "target cloud loaded with " << input_cloud_target->points.size()  << " number of points" << endl;
+  std::cout << "target cloud loaded with " << input_cloud_target->points.size()  << " number of points" << std::endl;
 
 
   if(input_cloud_target->points.empty())
   {
-    cerr << "path might be wrong because the second pointcloud is empty" << endl;
+    cerr << "path might be wrong because the second pointcloud is empty" << std::endl;
     return(1);
 
   }
@@ -132,14 +140,14 @@ int main(int argc,char **argv)
   uniform_sampling.setInputCloud(input_cloud_source);
   uniform_sampling.setRadiusSearch(sampling_radius_source);
   uniform_sampling.filter(*keypoints_source);
-  cout << "number of keypoins for cloud 1: " << keypoints_source->points.size() << endl;
+  std::cout << "number of keypoins for cloud 1: " << keypoints_source->points.size() << std::endl;
 
 
   IntensityCloud::Ptr keypoints_target(new IntensityCloud);
   uniform_sampling.setInputCloud(input_cloud_target);
   uniform_sampling.setRadiusSearch(sampling_radius_target);
   uniform_sampling.filter(*keypoints_target);
-  cout << "number of keypoints for cloud 2: " << keypoints_target->points.size() << endl;
+  std::cout << "number of keypoints for cloud 2: " << keypoints_target->points.size() << std::endl;
 
 
   Deep3DDescriptor deep_feature;
@@ -159,15 +167,15 @@ int main(int argc,char **argv)
   FeatureCloud deep_features_target;
   deep_feature.compute(deep_features_target);
   IntensityCloud selected_keypoints_target = deep_feature.getSelectedKeypoints();
-  pcl::Correspondences correspondences;
+  pcl::CorrespondencesPtr correspondences(new pcl::Correspondences);
 
   if(use_metric == 1)
   {
-    cout << "using metric learning for matching features" << endl;
+    std::cout << "using metric learning for matching features" << std::endl;
     MatchDeep3DDescriptor est_deep_correspondences;
     est_deep_correspondences.setFeatureSource(deep_features_source);
     est_deep_correspondences.setFeatureTarget(deep_features_target);
-    est_deep_correspondences.estimateCorrespondences(correspondences);
+    est_deep_correspondences.estimateCorrespondences(*correspondences);
   }
 
   else
@@ -193,7 +201,7 @@ int main(int argc,char **argv)
         }
 
 
-/*        cout <<  << endl;*/
+/*        std::cout <<  << std::endl;*/
 
         /*getchar();*/
 
@@ -204,56 +212,90 @@ int main(int argc,char **argv)
       pcl::Correspondence corr;
       corr.index_query = index_source;
       corr.index_match = min_index;
-      correspondences.push_back(corr);
+      correspondences->push_back(corr);
 
 
     }
-/*    cout << "using euclidean distance for matching features" << endl;*/
+/*    std::cout << "using euclidean distance for matching features" << std::endl;*/
     //pcl::registration::CorrespondenceEstimation<DeepFeature256,DeepFeature256> est;
     //est.setInputSource (deep_features_source.makeShared());
     //est.setInputTarget (deep_features_target.makeShared());
     /*est.determineCorrespondences (correspondences);*/
   }
+/////plotting correspondence
+  boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_correspondence(
+        new pcl::visualization::PCLVisualizer("Correspondences"));
 
-  boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(
-        new pcl::visualization::PCLVisualizer("3D Viewer"));
-
-
-
-  std::cout << input_cloud_source->points.size() << endl;
-  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> purple(input_cloud_source, 51, 0, 102);
-  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> green(input_cloud_target, 0, 102, 0);
-  viewer->addPointCloud<IntensityPoint>(input_cloud_source,green,"input_cloud_source");
-  viewer->addPointCloud<IntensityPoint>(input_cloud_target,purple,"input_cloud_target");
-  viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_source");
-  viewer->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
-  viewer->setBackgroundColor(255,255,255);
-
-
-
-  size_t ctr = 0;
-  std::stringstream ss;
-  for(auto &corr:correspondences)
+  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> green(input_cloud_source, 0, 102, 0);
+  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> purple(input_cloud_target, 51, 0, 102);
+  viewer_correspondence->addPointCloud<IntensityPoint>(input_cloud_source,green,"input_cloud_source");
+  viewer_correspondence->addPointCloud<IntensityPoint>(input_cloud_target,purple,"input_cloud_target");
+  viewer_correspondence->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_source");
+  viewer_correspondence->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
+  viewer_correspondence->setBackgroundColor(255,255,255);
+  pcl::registration::TransformationEstimationSVD<pcl::PointXYZI,pcl::PointXYZI,float> svd;
+  Eigen::Matrix4f transformation;
+  if(use_ransac == 1)
   {
-
-    ss.str("");
-    ss << "line_" << ctr;
-/*    cout << corr.index_query << "," << corr.index_match << endl;*/
-    /*getchar();*/
-    viewer->addLine(selected_keypoints_source.points[corr.index_query],selected_keypoints_target.points[corr.index_match],255,0,0,ss.str());
-
-    ctr+=1;
-
+    pcl::Correspondences inlier_correspondences;
+    pcl::registration::CorrespondenceRejectorSampleConsensus<pcl::PointXYZI> ransac_filtering;
+    ransac_filtering.setInlierThreshold(0.15);
+    ransac_filtering.setMaximumIterations(10000);
+    ransac_filtering.setInputTarget(selected_keypoints_target.makeShared());
+    ransac_filtering.setInputSource(selected_keypoints_source.makeShared());
+    ransac_filtering.setInputCorrespondences(correspondences);
+    ransac_filtering.getCorrespondences(inlier_correspondences);
+    transformation = ransac_filtering.getBestTransformation();
+    size_t ctr = 0;
+    std::stringstream ss;
+    for(auto &corr:inlier_correspondences)
+    {
+      ss.str("");
+      ss << "line_" << ctr;
+      viewer_correspondence->addLine(selected_keypoints_source.points[corr.index_query],selected_keypoints_target.points[corr.index_match],255,0,0,ss.str());
+      ctr+=1;
+    }
 
 
   }
-
-
-  while (!viewer->wasStopped ())
+  else
   {
-    viewer->spinOnce (100);
-    boost::this_thread::sleep (boost::posix_time::microseconds (100000));
+    size_t ctr = 0;
+    std::stringstream ss;
+    for(auto &corr:*correspondences)
+    {
+      ss.str("");
+      ss << "line_" << ctr;
+      viewer_correspondence->addLine(selected_keypoints_source.points[corr.index_query],selected_keypoints_target.points[corr.index_match],255,0,0,ss.str());
+      ctr+=1;
+    }
+    svd.estimateRigidTransformation(selected_keypoints_source,selected_keypoints_target,*correspondences,transformation);
+  }
 
+  std::cout << "Estimated Transformation " << std::endl;
+  std::cout << transformation << std::endl;
+  IntensityCloud::Ptr cloud_aligned(new IntensityCloud);
+  pcl::transformPointCloud<pcl::PointXYZI>(*input_cloud_source,*cloud_aligned,transformation);
+  boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_alignment(
+        new pcl::visualization::PCLVisualizer("Alignment"));
+
+  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint> purple_aligned(cloud_aligned, 51, 0, 102);
+  viewer_alignment->addPointCloud<IntensityPoint>(cloud_aligned,purple_aligned,"cloud_aligned");
+  viewer_alignment->addPointCloud<IntensityPoint>(input_cloud_target,green,"input_cloud_target");
+  viewer_alignment->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "cloud_aligned");
+  viewer_alignment->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
+  viewer_alignment->setBackgroundColor(255,255,255);
+
+
+
+
+
+  while (!viewer_correspondence->wasStopped() || !viewer_alignment->wasStopped())
+  {
+    viewer_correspondence->spinOnce (100);
+    boost::this_thread::sleep (boost::posix_time::microseconds (100000));
+    viewer_alignment->spinOnce (100);
+    boost::this_thread::sleep (boost::posix_time::microseconds (100000));
   }
 
 

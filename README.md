@@ -101,11 +101,11 @@ For matching feafeature descriptor
 ```
 ./visualize_deep_3D_feature_correspondence --path_to_source_pcd_file --sampling_radius_source 
  --path_to_target_pcd_file --sampling_radius_target --feature_neighborhood_radius 
- --use_learned_metric
+ --use_learned_metric --use_ransac
 
 ```
 
-### Example for visualizing the estimated feature correspondences. The correspondences are estimated using the metric learned by the network
+### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
 
 
 In the Tensorflow environment. PythonServer.py is in the python-cpp folder
@@ -116,11 +116,11 @@ python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3
 ```
 
 ```
-./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1
+./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
 
 ```
 
-### Example for visualizing the estimated feature correspondences. The correspondences are estimated using Euclidean distance
+### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
 
 
 In the Tensorflow environment. PythonServer.py is in the python-cpp folder
@@ -131,7 +131,7 @@ python PythonServer.py --model_name ../models/deep_3d_descriptor_hinge_loss/deep
 ```
 
 ```
-./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0
+./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
 ```
 
