@@ -1,4 +1,4 @@
-#include "deep_3D_descriptor/deep_3D_descriptor.h"
+#include "deep_3d_descriptor/deep_3d_descriptor.h"
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;

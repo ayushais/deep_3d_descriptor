@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-SET(CMAKE_BUILD_TYPE Debug)
+SET(CMAKE_BUILD_TYPE Release)
 project (deep_3D_feature)
 SET(PCL_DIR "" CACHE STRING "path to PCLConfig.cmake for 1.8")
 
@@ -38,19 +38,19 @@ set(BASE_SOURCE_FILES python-cpp/gen-cpp/getFeatures.cpp python-cpp/gen-cpp/pyth
   python-cpp/gen-cpp/pythonCpp_constants.cpp)
 #set(CLIENT_FILES src/estimate_input_patch.cpp)
 
-add_library(deep3ddescriptor SHARED src/deep_3D_descriptor.cpp ${BASE_SOURCE_FILES})
+add_library(deep3ddescriptor SHARED src/deep_3d_descriptor.cpp ${BASE_SOURCE_FILES})
 target_link_libraries(deep3ddescriptor thrift ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_library(matchdeep3ddescriptor SHARED src/match_deep_3D_descriptor.cpp)
+add_library(matchdeep3ddescriptor SHARED src/match_deep_3d_descriptor.cpp)
 target_link_libraries(matchdeep3ddescriptor thrift ${PCL_LIBRARIES})
 
-add_executable(compute_deep_3D_descriptor src/compute_deep_3D_descriptor.cpp)
-target_link_libraries(compute_deep_3D_descriptor ${PCL_LIBRARIES} deep3ddescriptor)
-add_dependencies(compute_deep_3D_descriptor deep3ddescriptor)
+add_executable(compute_deep_3d_descriptor src/compute_deep_3d_descriptor.cpp)
+target_link_libraries(compute_deep_3d_descriptor ${PCL_LIBRARIES} deep3ddescriptor)
+add_dependencies(compute_deep_3d_descriptor deep3ddescriptor)
 
 
-add_executable(visualize_deep_3D_descriptor_correspondence src/visualize_deep_3D_descriptor_correspondence.cpp)
-target_link_libraries(visualize_deep_3D_descriptor_correspondence ${PCL_LIBRARIES} deep3ddescriptor matchdeep3ddescriptor)
+add_executable(visualize_deep_3d_descriptor_correspondences src/visualize_deep_3d_descriptor_correspondences.cpp)
+target_link_libraries(visualize_deep_3d_descriptor_correspondences ${PCL_LIBRARIES} deep3ddescriptor matchdeep3ddescriptor)
 #add_dependencies(visualize_deep_3D_descriptor_correspondence deep3ddescriptor matchdeep3ddescriptor)
 
 

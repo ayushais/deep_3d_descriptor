@@ -1,9 +1,5 @@
-#include "deep_3D_descriptor/deep_3D_descriptor.h"
-#include "deep_3D_descriptor/match_deep_3D_descriptor.h"
-#include <pcl/filters/uniform_sampling.h>
-#include <pcl/registration/correspondence_estimation.h>
-#include <pcl/visualization/pcl_visualizer.h>
-
+#include "deep_3d_descriptor/deep_3d_descriptor.h"
+#include "deep_3d_descriptor/match_deep_3d_descriptor.h"
 int main(int argc,char **argv)
 {
   if(argc < 5)

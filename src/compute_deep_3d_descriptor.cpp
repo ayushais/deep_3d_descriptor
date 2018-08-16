@@ -1,6 +1,4 @@
-#include "deep_3D_descriptor/deep_3D_descriptor.h"
-#include <pcl/registration/correspondence_estimation.h>
-#include <pcl/filters/uniform_sampling.h>
+#include "deep_3d_descriptor/deep_3d_descriptor.h"
 
 int main(int argc,char **argv)
 {

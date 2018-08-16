@@ -2,7 +2,7 @@
 #ifndef MATCHDEEP3DDESCRIPTOR_H
 #define MATCHDEEP3DDESCRIPTOR_H
 #include <pcl/common/norms.h>
-#include "deep_3D_descriptor.h"
+#include "deep_3d_descriptor.h"
 #include <pcl/registration/correspondence_estimation.h>
 class MatchDeep3DDescriptor
 {

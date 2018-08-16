@@ -9,7 +9,6 @@
 #include <pcl/common/common.h>
 #include <pcl/registration/correspondence_rejection_sample_consensus.h>
 #include <pcl/registration/transformation_estimation_svd.h>
-#include <opencv2/contrib/contrib.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "thrift/transport/TSocket.h"
 #include <thrift/transport/TBufferTransports.h>
@@ -17,6 +16,11 @@
 #include <thrift/stdcxx.h>
 #include "getFeatures.h"
 #include <pcl/console/parse.h>
+#include <pcl/registration/correspondence_estimation.h>
+#include <pcl/filters/uniform_sampling.h>
+#include <pcl/visualization/pcl_visualizer.h>
+
+
 struct DeepFeature256
 {
   float descriptor[256];

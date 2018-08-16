@@ -46,6 +46,7 @@ In the project directory
 
 ```
 mkdir build
+cd build
 cmake .. 
 make
 
@@ -85,7 +86,7 @@ All the Thrift related code and the python service file is in the folder python-
 
 The service has to be started within the tensorflow environment
 ```
-python PythonServer.py --model_name --using_hinge_loss
+python python_server.py --model_name --using_hinge_loss
 
 ```
 We provide two test files, the first one for computing a feature descriptor and 
@@ -93,13 +94,13 @@ the second one for matching the descriptors.
 
 For computing feature descriptor 
 ```
-./compute_deep_3D_feature --path_to_pcd_file  --feature_neighborhood_radius --sampling_radius_for_keypoints
+./compute_deep_3d_feature --path_to_pcd_file  --feature_neighborhood_radius --sampling_radius_for_keypoints
 
 ```
 
 For matching feafeature descriptor 
 ```
-./visualize_deep_3D_feature_correspondence --path_to_source_pcd_file --sampling_radius_source 
+./visualize_deep_3d_feature_correspondences --path_to_source_pcd_file --sampling_radius_source 
  --path_to_target_pcd_file --sampling_radius_target --feature_neighborhood_radius 
  --use_learned_metric --use_ransac
 
@@ -108,7 +109,7 @@ For matching feafeature descriptor
 ### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
 
 
-In the Tensorflow environment. PythonServer.py is in the python-cpp folder
+In the Tensorflow environment. python_server.py is in the python_cpp folder
 
 ```
 python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt --use_hinge_loss 0
@@ -116,22 +117,22 @@ python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3
 ```
 
 ```
-./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
+./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
 
 ```
 
 ### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
 
 
-In the Tensorflow environment. PythonServer.py is in the python-cpp folder
+In the Tensorflow environment. PythonServer.py is in the python_cpp folder
 
 ```
-python PythonServer.py --model_name ../models/deep_3d_descriptor_hinge_loss/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
+python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
 
 ```
 
 ```
-./visualize_deep_3D_descriptor_correspondence --path_to_source_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_3_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
+./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
 ```
 
