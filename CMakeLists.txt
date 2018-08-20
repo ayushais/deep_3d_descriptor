@@ -19,7 +19,8 @@ FIND_PACKAGE ( Threads REQUIRED )
 
 
 set(THRIFT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/include/)
-include_directories(${THRIFT_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/python-cpp/gen-cpp)
+include_directories(${THRIFT_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/gen-cpp)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/lib/)
 
 find_package(OpenMP)
@@ -34,8 +35,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/build)
 
 
-set(BASE_SOURCE_FILES python-cpp/gen-cpp/getFeatures.cpp python-cpp/gen-cpp/pythonCpp_types.cpp
-  python-cpp/gen-cpp/pythonCpp_constants.cpp)
+set(BASE_SOURCE_FILES python_cpp/gen-cpp/get_descriptors.cpp python_cpp/gen-cpp/python_cpp_types.cpp
+    python_cpp/gen-cpp/python_cpp_constants.cpp)
 #set(CLIENT_FILES src/estimate_input_patch.cpp)
 
 add_library(deep3ddescriptor SHARED src/deep_3d_descriptor.cpp ${BASE_SOURCE_FILES})

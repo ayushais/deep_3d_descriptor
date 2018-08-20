@@ -244,7 +244,7 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
   stdcxx::shared_ptr<TSocket> socket(new TSocket("localhost", 9090));
   stdcxx::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   stdcxx::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  getFeaturesClient client(protocol);
+  get_descriptorsClient client(protocol);
   transport->open();
   size_t ctr = 0;
   std::vector<double>patch_vector(selected_keypoints_->points.size() * kPatchSize * kPatchSize * 2);
@@ -260,7 +260,7 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
   }
 
   std::vector<double>feature_vector(selected_keypoints_->points.size() * 256);
-  client.returnFeature(feature_vector,patch_vector);
+  client.return_descriptors(feature_vector,patch_vector);
   transport->close();
   std::cout << "feature estimated" << std::endl;
 

@@ -1,4 +1,4 @@
-# deep_3D_feature
+# deep_3D_descriptor
 
 Code for the paper "Learning Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
@@ -112,7 +112,7 @@ For matching feafeature descriptor
 In the Tensorflow environment. python_server.py is in the python_cpp folder
 
 ```
-python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3d_descriptor_matching.ckpt --use_hinge_loss 0
+python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt --use_hinge_loss 0
 
 ```
 
@@ -127,7 +127,8 @@ python PythonServer.py --model_name ../models/deep_3d_descriptor_matching/deep_3
 In the Tensorflow environment. PythonServer.py is in the python_cpp folder
 
 ```
-python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
+
+python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 0
 
 ```
 

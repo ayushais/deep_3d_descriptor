@@ -11,10 +11,10 @@
 #include <pcl/registration/transformation_estimation_svd.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "thrift/transport/TSocket.h"
-#include <thrift/transport/TBufferTransports.h>
-#include <thrift/protocol/TBinaryProtocol.h>
-#include <thrift/stdcxx.h>
-#include "getFeatures.h"
+#include "thrift/transport/TBufferTransports.h"
+#include "thrift/protocol/TBinaryProtocol.h"
+#include "thrift/stdcxx.h"
+#include "get_descriptors.h"
 #include <pcl/console/parse.h>
 #include <pcl/registration/correspondence_estimation.h>
 #include <pcl/filters/uniform_sampling.h>

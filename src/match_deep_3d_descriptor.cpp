@@ -41,10 +41,10 @@ void MatchDeep3DDescriptor::estimateCorrespondences(pcl::Correspondences &corres
   stdcxx::shared_ptr<TSocket> socket(new TSocket("localhost", 9090));
   stdcxx::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   stdcxx::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-  getFeaturesClient client(protocol);
+  get_descriptorsClient client(protocol);
   transport->open();
   std::vector<int>matched_features(features_source_.size());
-  client.matchFeatures(matched_features,features_source_flattened,features_target_flattened);
+  client.match_descriptors(matched_features,features_source_flattened,features_target_flattened);
   transport->close();
 
   ctr = 0;

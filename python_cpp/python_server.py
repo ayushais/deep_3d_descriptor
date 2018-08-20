@@ -5,8 +5,8 @@ from __future__ import print_function
 import sys
 sys.path.append('gen-py')
 sys.path.append('../external/thrift-0.11.0/lib/python2.7/site-packages')
-from pythonCpp import getFeatures
-from pythonCpp.ttypes import *
+from python_cpp import get_descriptors
+from python_cpp.ttypes import *
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
@@ -25,11 +25,7 @@ from sys import argv
 import multiprocessing
 import time
 import socket
-
-
-
-
-class inference_net:
+class InferenceNet:
   def __init__ (self,bneck_size,graph):
     self.graph = []
     self.bneck_1 = tf.placeholder(tf.float32, shape=[None,bneck_size],name="bneck_1")
@@ -76,7 +72,7 @@ class inference_net:
   def bias_variable(self,shape):
       initial = tf.constant(0.1, shape=shape,name="bias")
       return tf.Variable(initial)
-class getFeaturesHandler:
+class GetDescriptorsHandler:
   def __init__(self,model,is_hinge_loss):
     self.log = {}
     self.session = tf.Session()
@@ -89,9 +85,10 @@ class getFeaturesHandler:
     self.is_hinge_loss = int(is_hinge_loss)
 
     print('model_loaded')
-    self.inference_object = inference_net(self.feature_size,self.graph)
+    self.inference_object = InferenceNet(self.feature_size,self.graph)
  
-  def matchFeatures(self,feature_1,feature_2):
+  def match_descriptors(self,feature_1,feature_2):
+    print('finding correspondences')
     feature_1 = np.array(feature_1)
     feature_2 = np.array(feature_2)
     feature_1 = np.reshape(feature_1,[-1,self.feature_size])
@@ -112,7 +109,7 @@ class getFeaturesHandler:
     corresponding_points = np.reshape(corresponding_points,[-1])
     print(corresponding_points.shape)
     return(corresponding_points) 
-  def returnFeature(self,input_patch_vector):
+  def return_descriptors(self,input_patch_vector):
 
     input_patch_vector = np.array(input_patch_vector)
     number_patches = np.int(input_patch_vector.shape[0]/(self.patch_size*self.patch_size*2))
@@ -169,8 +166,8 @@ def main():
 
 
  #  script,model,is_hinge_loss = argv
-  handler = getFeaturesHandler(model,is_hinge_loss)
-  processor = getFeatures.Processor(handler)
+  handler = GetDescriptorsHandler(model,is_hinge_loss)
+  processor = get_descriptors.Processor(handler)
   transport = TSocket.TServerSocket('localhost',9090)
   tfactory = TTransport.TBufferedTransportFactory()
   pfactory = TBinaryProtocol.TBinaryProtocolFactory()
