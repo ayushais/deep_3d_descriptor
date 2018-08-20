@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 SET(CMAKE_BUILD_TYPE Release)
-project (deep_3D_feature)
+project (deep_3d_descriptor)
 SET(PCL_DIR "" CACHE STRING "path to PCLConfig.cmake for 1.8")
 
 find_package(PCL 1.8 REQUIRED)
