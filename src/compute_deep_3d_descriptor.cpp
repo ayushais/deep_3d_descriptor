@@ -18,6 +18,8 @@ int main(int argc,char **argv)
     std::cerr << "pointcloud path not given" << std::endl;
     return(1);
   }
+
+
   if(pcl::console::find_argument(argc, argv, "--feature_neighborhood_radius") >= 0)
   {
     neighbourhood_radius = atof(argv[pcl::console::find_argument(argc, argv, "--feature_neighborhood_radius")+1]);

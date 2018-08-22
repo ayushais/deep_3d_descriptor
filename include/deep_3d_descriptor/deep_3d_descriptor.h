@@ -20,7 +20,6 @@
 #include <pcl/filters/uniform_sampling.h>
 #include <pcl/visualization/pcl_visualizer.h>
 
-
 struct DeepFeature256
 {
   float descriptor[256];
