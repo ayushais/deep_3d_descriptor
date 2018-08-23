@@ -5,7 +5,18 @@ This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
 
+## Training 
+### Prerequisites
 
+* [Tensorflow]:(https://www.tensorflow.org/install/install_linux) 
+
+### Training the model
+
+```
+python siamese.py --filename --path_to_train_hdf5 --path_to_test_hdf5
+
+```
+This command has to be executed in a TensorFlow envionment. 
 
 ## C++ API
 
@@ -73,17 +84,10 @@ sequence. 'trackID' is the object ID provided by the benchmark. For instance '00
 ```
 This will download the trained model files. We provide model for a feature descriptor learned simulataneously with
 a metric for matching the descriptors and a feature descriptor learned using hinge loss.
-'deep_3d_descriptor_matching' contains the learned weights for the descritpor and the metric. 'deep_3d_descriptor_hinge_loss'
- contains the learned weights for the descriptor trained using hinge loss. 
+'deep_3d_descriptor_matching' contains the learned weights for the descriptor and the metric. 'deep_3d_descriptor_hinge_loss'
+ is the learned model for the descriptor trained using hinge loss.
 
 
-## Training the model
-
-```
-python siamese.py --filename --path_to_train_hdf5 --path_to_test_hdf5
-
-```
-This command has to be executed in a TensorFlow envionment. 
 
 ## Using the learned descriptor with PCL
 
