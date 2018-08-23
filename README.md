@@ -24,7 +24,7 @@ belonging to same keypoint.
 ### Training the model
 
 ```
-python siamese.py --filename --path_to_train_hdf5 --path_to_test_hdf5
+python siamese.py --model_name --path_to_training_data --path_to_testing_data
 
 ```
 This command has to be executed in a TensorFlow envionment. 
