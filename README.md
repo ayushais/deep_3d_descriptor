@@ -110,7 +110,7 @@ For computing feature descriptor
 ```
 
 For visualizing the correspondences between the descriptors and aligning the poinclouds using estimated correspondences.
-For aligning the pointclouds, we provide an option of using RANSAC. If RANSAC option is enabled, the correspondences shown
+For aligning the pointclouds, we provide an option of using RANSAC. If RANSAC option is enabled, then the correspondences shown
 correspond to the inlier set estimated by RANSAC. 
 ```
 ./visualize_deep_3d_feature_correspondences --path_to_source_pcd_file --sampling_radius_source 
@@ -135,10 +135,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ```
 
 ### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
-
-
-In the Tensorflow environment. PythonServer.py is in the python_cpp folder
-
+ 
 ```
 
 python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 0
