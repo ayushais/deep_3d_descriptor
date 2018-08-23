@@ -8,7 +8,16 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 ## Training 
 ### Prerequisites
 
-* [Tensorflow]:(https://www.tensorflow.org/install/install_linux) 
+* [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
+
+### Dataset
+```
+./download_data_network.sh
+
+```
+This will download the dataset used for training and testing. The data is the format
+NxCxHxC and is stored in hdf5 files. The first channel corresponds to the depth value and the second
+channel corresponds to the LiDAR intensity value. 
 
 ### Training the model
 
@@ -67,10 +76,10 @@ In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL 
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
 
-## Downloading the dataset
+## Downloading the test pointcloud
 
 ```
-./download_dataset.sh
+./download_test_pcd.sh
 ```
 This will download the test pointcloud files used in alignment experiment in the paper.
 The name format for the files is seq_scan_trackID_object.pcd. 
