@@ -2,12 +2,12 @@
 
 Code for the paper "Learning Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
-the feature descriptors. We also provide a C++ library for using the learned features descriptor with PCL. 
+the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
 
 
 
-## Getting Started
+## C++ API
 
 git clone command goes here
 command for downloading the dataset
@@ -61,7 +61,11 @@ cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
 ./download_dataset.sh
 ```
-This will download the test pointcloud files
+This will download the test pointcloud files used in alignment experiment in the paper.
+The name format for the files is seq_scan_trackID_object.pcd. 
+'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given
+sequence. 'trackID' is the object ID provided by the benchmark. For instance '0011_126_14_object.pcd' and 
+'0011_127_14_object.pcd' are the same objects in two consecutive scans.
 ## Downloading the models
 
 ```
