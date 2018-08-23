@@ -5,7 +5,7 @@ This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
 
-## Training 
+## Training the Network 
 ### Prerequisites
 
 * [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
@@ -16,8 +16,10 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 ```
 This will download the dataset used for training and testing. The data is the format
-NxCxHxC and is stored in hdf5 files. The first channel corresponds to the depth value and the second
-channel corresponds to the LiDAR intensity value. 
+NxCxHxW and is stored in hdf5 files. The first channel corresponds to the depth value and the second
+channel corresponds to the LiDAR intensity value. For every example there is a label and all the examples corresponding
+to the same keypoint have same label. These labels are not used directly for training but only to identify examples
+belonging to same keypoint. 
 
 ### Training the model
 
