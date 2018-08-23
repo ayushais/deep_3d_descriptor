@@ -93,7 +93,7 @@ a metric for matching the descriptors and a feature descriptor learned using hin
 
 We provide a service and client API for using the learned feature descriptor with PCL.
 
-All the Thrift related code and the python service file is in the folder python-cpp
+All the Thrift related code and the python service file is in the folder python_cpp
 
 The service has to be started within the tensorflow environment
 ```
@@ -109,7 +109,9 @@ For computing feature descriptor
 
 ```
 
-For matching feafeature descriptor 
+For visualizing the correspondences between the descriptors and aligning the poinclouds using estimated correspondences.
+For aligning the pointclouds, we provide an option of using RANSAC. If RANSAC option is enabled, the correspondences shown
+correspond to the inlier set estimated by RANSAC. 
 ```
 ./visualize_deep_3d_feature_correspondences --path_to_source_pcd_file --sampling_radius_source 
  --path_to_target_pcd_file --sampling_radius_target --feature_neighborhood_radius 
