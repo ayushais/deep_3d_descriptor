@@ -58,11 +58,11 @@ class Siamese:
     self.lr = tf.placeholder(tf.float32,name="lr")##for learning rate
       
 ### load the file listing positive combinations      
-    self.positive_combination = np.loadtxt('positive_combination_train_3d_patches.txt',delimiter=",")
+    self.positive_combination = np.loadtxt('positive_combination_training.txt',delimiter=",")
     random.shuffle(self.positive_combination)
 
 ### load the file listing positive combinations      
-    self.negative_combination = np.loadtxt('negative_combination_train_3d_patches.txt',delimiter=",")
+    self.negative_combination = np.loadtxt('negative_combination_training.txt',delimiter=",")
     random.shuffle(self.negative_combination)
       ###load the training hdf5 file (need to get rid of the hardcoded path)
     hdf5_file = h5py.File(training_file_path,  "r")  
@@ -83,9 +83,9 @@ class Siamese:
      
 
 ###load the testing hdf5 file (need to get rid of the hardcoded path)
-    self.positive_combination_test = np.loadtxt('positive_combination_test_3d_patches_test.txt',delimiter=",")
+    self.positive_combination_test = np.loadtxt('positive_combination_testing.txt',delimiter=",")
     random.shuffle(self.positive_combination_test)
-    self.negative_combination_test = np.loadtxt('negative_combination_test_3d_patches_test.txt',delimiter=",")
+    self.negative_combination_test = np.loadtxt('negative_combination_testing.txt',delimiter=",")
     random.shuffle(self.negative_combination_test)
     hdf5_file = h5py.File(test_file_path,  "r")  
     a_group_key_data = hdf5_file.keys()[0]
