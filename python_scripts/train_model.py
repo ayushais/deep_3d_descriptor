@@ -47,7 +47,7 @@ class Siamese:
       if(line[0] == "eta"):
         self.eta = float(line[1])
       if(line[0] == "growth"):
-        self.growth = float(line[1])
+        self.growth = int(line[1])
     f_write.close()
     f.close()
       
@@ -184,7 +184,7 @@ class Siamese:
         stack = tf.concat([stack, current_layer],axis=3)
         print(stack.shape)
         features += growth
-      return stack,features,db_output
+    return stack,features,db_output
   def contrastive_loss(self):
     d = tf.reduce_sum(tf.square(self.bneck_1 - self.bneck_2),1)
     self.d_sqrt = tf.sqrt(d)
@@ -204,15 +204,15 @@ class Siamese:
     with tf.control_dependencies(update_ops):
         return(tf.train.AdamOptimizer(self.lr).minimize(self.loss_value))
 ####metric learning model
-  def metric_model(self,feature_1,feature_2):
+  def metric_model(self):
      ##concatenation of two streams of siamese 
-    bneck_combined = tf.concat((feature_1,feature_2),axis=1) 
+    bneck_combined = tf.concat((self.bneck_1,self.bneck_2),axis=1) 
     fc_1 = self.fc_layer(bneck_combined,self.fc_size,"fc_1")
     fc_2 = self.fc_layer(fc_1,512,"fc_2")
     fc_3 = self.fc_layer(fc_2,self.fc_size/2,"fc_3")
     fc_4 = self.fc_layer(fc_3,self.fc_size/4,"fc_4")
     fc_5 = self.fc_layer(fc_4,2,"fc_5",False)
-    return(fc_3)
+    return(fc_5)
   def dense_model(self,data):
     conv_0 = self.conv_layer(data,16,3,3,1,1,'SAME',"conv_0")
     conv_1 = self.conv_layer(conv_0,16,3,3,1,1,'SAME',"conv_1")
@@ -385,9 +385,9 @@ def main():
     _,l,lr,loss = sess.run([siamese_object.train_step,siamese_object.loss_value,siamese_object.lr,siamese_object.loss_value],feed_dict=feed_dict)
 
     if(num_iteration % 1000 == 0):
-      minibatch_accuracy = accuracy(predictions, label)
+      #minibatch_accuracy = accuracy(predictions, label)
       print("loss_value %f,%d" % (l,num_iteration))
-      accuracy_train.append(minibatch_accuracy)
+      #accuracy_train.append(minibatch_accuracy)
       loss_val_train.append(l)
       image_left_test,image_right_test,label_test = siamese_object.load_test_batch(100)
       feed_dict = {siamese_object.x1:image_left_test,siamese_object.keep_prob:1.0,siamese_object.is_training:False}
@@ -405,26 +405,26 @@ def main():
       accuracy_test.append(test_accuracy)
       print("test loss_value %f,%d" % (l,num_iteration))
       print('test accuracy: %.1f%%' % test_accuracy)
-    
-###fix the model path
-      model_name = 'models/' + filename + '_' + str(num_iteration) + '.ckpt'
-      saver.save(sess, model_name)
+      
+      if(num_iteration % model_iteration == 0 and num_iteration > 0):
+        filename_save = 'models/' + model_name + '_' + str(num_iteration) + '.ckpt'
+        saver.save(sess, filename_save)
 
 
   loss_val_train = np.array(loss_val_train)
-  filename_save = "results/" + filename + "_train_loss.txt"
+  filename_save = "results/" + model_name + "_train_loss.txt"
   np.savetxt(filename_save,loss_val_train,fmt="%10.5f")
   
   loss_val_test = np.array(loss_val_test)
-  filename_save = "results/" + filename + "_test_loss.txt"
+  filename_save = "results/" + model_name + "_test_loss.txt"
   np.savetxt(filename_save,loss_val_test,fmt="%10.5f")
   
   accuracy_train = np.array(accuracy_train)
-  filename_save = "results/" + filename + "_train_accuracy.txt"
+  filename_save = "results/" + model_name + "_train_accuracy.txt"
   np.savetxt(filename_save,accuracy_train,fmt="%10.5f")
 
   accuracy_test = np.array(accuracy_test)
-  filename_save = "results/" + filename + "_test_accuracy.txt"
+  filename_save = "results/" + model_name + "_test_accuracy.txt"
   np.savetxt(filename_save,accuracy_test,fmt="%10.5f")
  
 
