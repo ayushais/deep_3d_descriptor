@@ -31,11 +31,9 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (DeepFeature256,
      (float[256], descriptor, descriptor)
  )
 
-
-typedef pcl::PointXYZI IntensityPoint;
-typedef pcl::PointCloud <IntensityPoint> IntensityCloud;
-typedef pcl::PointCloud <DeepFeature256> FeatureCloud;
-
+using IntensityPoint = pcl::PointXYZI;
+using IntensityCloud = pcl::PointCloud <IntensityPoint>;
+using FeatureCloud = pcl::PointCloud <DeepFeature256>;
 constexpr int kPatchSize = 64;
 constexpr int kDescriptorSize = 256;
 class Deep3DDescriptor
@@ -46,8 +44,7 @@ class Deep3DDescriptor
     float nb_radius_;
     IntensityCloud::Ptr keypoints_;
     IntensityCloud::Ptr selected_keypoints_;
-    void get_image_patch(const float min_val,const float max_val,
-        std::vector<cv::Mat>&image_patches_vector);
+    void get_image_patch(std::vector<cv::Mat>&image_patches_vector);
 
   public:
     Deep3DDescriptor();

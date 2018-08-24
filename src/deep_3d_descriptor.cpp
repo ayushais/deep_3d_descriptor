@@ -4,16 +4,15 @@ using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 
 
-Deep3DDescriptor::Deep3DDescriptor():cloud_(new IntensityCloud),keypoints_(new IntensityCloud),
-  selected_keypoints_(new IntensityCloud){}
+Deep3DDescriptor::Deep3DDescriptor():cloud_{new IntensityCloud},keypoints_{new IntensityCloud},
+  selected_keypoints_{new IntensityCloud}{}
 
 
 void Deep3DDescriptor::setInputCloud(const IntensityCloud::Ptr &cloud_input) {cloud_ = cloud_input;}
 void Deep3DDescriptor::setRadius(const float nb_radius_input) {nb_radius_ = nb_radius_input;}
 void Deep3DDescriptor::setKeypoints(const IntensityCloud::Ptr &keypoints_input) {keypoints_ = keypoints_input;}
 IntensityCloud Deep3DDescriptor::getSelectedKeypoints(){return (*selected_keypoints_);}
-
-void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,std::vector<cv::Mat>&image_patches_vector)
+void Deep3DDescriptor::get_image_patch(std::vector<cv::Mat>&image_patches_vector)
 {
   std::vector<cv::Mat>vecD_initial;
   vecD_initial.resize(keypoints_->points.size());
@@ -23,7 +22,6 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
   for(size_t p = 0; p < keypoints_->points.size();++p)
   {
     pcl::PointXYZI point = keypoints_->points[p];
-    Eigen::Vector4f min_vec_big,max_vec_big;
     float min_x = point.x - (nb_radius_/2);
     float max_x = point.x + (nb_radius_/2);
 
@@ -35,18 +33,12 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
     float voxel_min_y = min_y;
     float voxel_min_z = min_z;
 
-    min_vec_big[0] = min_x;
-    min_vec_big[1] = min_y;
-    min_vec_big[2] = min_z;
-    min_vec_big[3] = 1;
 
-    max_vec_big[0] = max_x;
-    max_vec_big[1] = max_y;
-    max_vec_big[2] = max_z;
-    max_vec_big[3] = 1;
-    float max_depth = max_vec_big.lpNorm<2>();
-    float min_depth = min_vec_big.lpNorm<2>();
-    float step_size = nb_radius_/kPatchSize;
+    Eigen::Vector4f min_vec_big(min_x,min_y,min_z,1);
+    Eigen::Vector4f max_vec_big(max_x,max_y,max_z,1);
+    const float max_depth{max_vec_big.lpNorm<2>()};
+    const float min_depth{min_vec_big.lpNorm<2>()};
+    const float step_size{nb_radius_/kPatchSize};
     std::vector<int>indices;
     pcl::getPointsInBox(*cloud_,min_vec_big,max_vec_big,indices);
     IntensityCloud cloud_box;
@@ -75,11 +67,11 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
     //std::cout << "here" << std::endl;
     for(size_t i = 1; i <= kPatchSize;i++)
     {
-      float voxel_max_z = voxel_min_z + step_size;
-      float voxel_min_y = min_y;
+      float voxel_max_z{voxel_min_z + step_size};
+      float voxel_min_y{min_y};
 
-      int count_empty = 0;
-      float voxel_max_y_row = voxel_min_y + (step_size * kPatchSize);
+      int count_empty{0};
+      float voxel_max_y_row{voxel_min_y + (step_size * kPatchSize)};
       Eigen::Vector4f min_vec_row(min_x,voxel_min_y,voxel_min_z,1.0);
       Eigen::Vector4f max_vec_row(max_x,voxel_max_y_row,voxel_max_z,1.0);
       IntensityCloud cloud_slice;
@@ -119,7 +111,7 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
       for(size_t k = 1; k <=kPatchSize;k++)
       {
 
-        float voxel_max_y = voxel_min_y + step_size;
+        float voxel_max_y{voxel_min_y + step_size};
         Eigen::Vector4f min_vec(min_x,voxel_min_y,voxel_min_z,1.0);
         Eigen::Vector4f max_vec(max_x,voxel_max_y,voxel_max_z,1.0);
 
@@ -145,8 +137,8 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
         }
 
 
-        float avg_depth = 0.;
-        float avg_intensity = 0.;
+        float avg_depth{0.0f};
+        float avg_intensity{0.0f};
 
         ///Estimate the average depth, intensity and height of a point
         for(auto &index:indices_bbox)
@@ -176,14 +168,13 @@ void Deep3DDescriptor::get_image_patch(const float min_val,const float max_val,s
        vecD_initial[p] = image_patch;
        cloud_box.points.clear();
   }
-  size_t count_zeros = 0;
-  size_t ctr = 0;
+  size_t count_zeros{0};
+  size_t ctr{0};
   for(auto &image_patch:vecD_initial)
   {
     if(image_patch.rows == 0)///the keypoint didn't have a patch
     {
       count_zeros+=1;
-
       ctr+=1;
       continue;
     }
@@ -216,26 +207,10 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
   std::cout << "Input neighbourhood size: " << nb_radius_ << std::endl;
 
   std::cout << "computing surface patches ...." << std::endl;
-  float mean_z = 0;
-  for (auto point : cloud_->points) {
-     mean_z += point.z;
-  }
-
-  float sd = 0;
-
-  mean_z /= cloud_->points.size();
-  for (auto point : cloud_->points) {
-    sd += ((point.z - mean_z) * (point.z - mean_z));
-  }
-
-  sd /= cloud_->points.size();
-
-  float min_val = (mean_z - (1.5 * sqrt(sd)));
-  float max_val = (mean_z + (1.5 * sqrt(sd)));
 
   selected_keypoints_->points.clear();
   std::vector<cv::Mat>keypoint_image_patches;
-  get_image_patch(min_val,max_val,keypoint_image_patches);
+  get_image_patch(keypoint_image_patches);
   std::cout << "surface patches computed" << std::endl;
   std::cout << "out of " << keypoints_->points.size()
     << " keypoints, patches computed for " << selected_keypoints_->points.size() << " keypoints" << std::endl;
@@ -246,7 +221,7 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
   stdcxx::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   get_descriptorsClient client(protocol);
   transport->open();
-  size_t ctr = 0;
+  size_t ctr{0};
   std::vector<double>patch_vector(selected_keypoints_->points.size() * kPatchSize * kPatchSize * 2);
   for(auto &image_patch:keypoint_image_patches)
   {
@@ -267,7 +242,7 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
   for(size_t i = 0; i < selected_keypoints_->points.size() ; ++i)
   {
     DeepFeature256 deep_feature;
-    int start_index = i * 256;
+    int start_index{i * 256};
     std::copy(feature_vector.begin() + start_index,feature_vector.begin() + start_index + 256,deep_feature.descriptor);
     features.points.push_back(deep_feature);
   }
