@@ -362,9 +362,9 @@ def main():
   sess.run(tf.global_variables_initializer())
   vars_ = tf.global_variables()
 
-  model_name = 'models/another_training_before_release_110062.ckpt'
+  fine_tune_model_name = 'models/another_training_before_release_110062.ckpt'
   new_saver = tf.train.Saver(vars_)
-  new_saver.restore(sess,model_name)
+  new_saver.restore(sess,fine_tune_model_name)
 
   loss_val_train = []
   loss_val_test = []
