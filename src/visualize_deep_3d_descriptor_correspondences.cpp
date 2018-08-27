@@ -2,15 +2,6 @@
 #include "deep_3d_descriptor/match_deep_3d_descriptor.h"
 int main(int argc,char **argv)
 {
-  if(argc < 5)
-  {
-    cerr << "The input is path to the first pointcloud, sampling radius for the first pointcloud" <<
-      " path to the second pointcloud, sampli radius for the second poincloud, neighourhood radius and " <<
-      " and 1/0 for using metric learning for matching or match features using euclidean distance" << std::endl;
-
-
-    return(1);
-  }
   float sampling_radius_source;
   float sampling_radius_target;
   float neighbourhood_radius;
@@ -197,10 +188,6 @@ int main(int argc,char **argv)
         }
 
 
-/*        std::cout <<  << std::endl;*/
-
-        /*getchar();*/
-
 
 
       }
@@ -212,11 +199,6 @@ int main(int argc,char **argv)
 
 
     }
-/*    std::cout << "using euclidean distance for matching features" << std::endl;*/
-    //pcl::registration::CorrespondenceEstimation<DeepFeature256,DeepFeature256> est;
-    //est.setInputSource (deep_features_source.makeShared());
-    //est.setInputTarget (deep_features_target.makeShared());
-    /*est.determineCorrespondences (correspondences);*/
   }
 /////plotting correspondence
   boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_correspondence(

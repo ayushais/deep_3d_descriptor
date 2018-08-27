@@ -246,6 +246,4 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
     std::copy(feature_vector.begin() + start_index,feature_vector.begin() + start_index + 256,deep_feature.descriptor);
     features.points.push_back(deep_feature);
   }
- /* cloud_->points.clear();*/
-  /*keypoints_->points.clear();*/
-}
+ }
