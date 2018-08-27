@@ -30,7 +30,6 @@ class Siamese:
     self.image_size = 64 
     self.num_channels = 2
     self.keep_prob = tf.placeholder(tf.float32,name="keep_prob")##for dropout
-    self.lr = tf.placeholder(tf.float32,name="lr")##for learning rate
       
 ### load the file listing positive combinations      
     self.positive_combination = np.loadtxt('positive_combination_training.txt',delimiter=",")
@@ -337,8 +336,6 @@ def main():
   args = parser.parse_args()
   if args.model_name:
     model_name = args.model_name
-    print(model_name)
-    raw_input()
   else:
     print('please enter the model name')
     exit()
@@ -402,15 +399,13 @@ def main():
 
   for num_iteration in range(total_iteration+1):
     image_left, image_right, label = siamese_object.load_batch(num_iteration)
-    
-    feed_dict = {siamese_object.x1:image_left,siamese_object.x2:image_right,siamese_object.tf_train_labels:label,siamese_object.keep_prob:1.0,siamese_object.lr:siamese_object.base_lr,siamese_object.is_training:True}
-    _,l,lr,loss = sess.run([siamese_object.train_step,siamese_object.loss_value,siamese_object.lr,siamese_object.loss_value],feed_dict=feed_dict)
-
+    feed_dict = {siamese_object.x1:image_left,siamese_object.x2:image_right,siamese_object.tf_train_labels:label,siamese_object.keep_prob:1.0,siamese_object.is_training:True}
+    _,loss = sess.run([siamese_object.train_step,siamese_object.loss_value],feed_dict=feed_dict)
     if(num_iteration % 1000 == 0):
       #minibatch_accuracy = accuracy(predictions, label)
-      print("loss_value %f,%d" % (l,num_iteration))
+      print("loss_value %f,%d" % (loss,num_iteration))
       #accuracy_train.append(minibatch_accuracy)
-      loss_val_train.append(l)
+      loss_val_train.append(loss)
       image_left_test,image_right_test,label_test = siamese_object.load_test_batch(100)
       feed_dict = {siamese_object.x1:image_left_test,siamese_object.keep_prob:1.0,siamese_object.is_training:False}
       feature_1 = sess.run([siamese_object.bneck_1],feed_dict=feed_dict)
