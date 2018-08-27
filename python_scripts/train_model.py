@@ -17,40 +17,15 @@ import tensorflow as tf
 from sys import argv
 
 class Siamese:
-  def __init__ (self,filename,training_file_path,test_file_path):
-    self.batch_size = []
-    self.epochs = []
-    self.lr = []
-    self.bneck_size = []
-    self.fc_size = []
-
-    self.eta = []
-    self.growth = []
-#### file to read parameters listed below
+  def __init__ (self,filename,training_file_path,test_file_path,
+      batch_size,epochs,learning_rate,eta,growth_rate):
+    self.batch_size = batch_size
+    self.epochs = epochs
+    self.lr = learning_rate
+    self.eta = eta
+    self.growth = growth_rate
     
-    f = open('parameters.txt', 'r')
-    filename_save  = "results/" + filename +"_params.txt"
-    f_write = open(filename_save, 'w')
-    for line in f:
-      f_write.write(line)
-      line = line.split(" ")
-      if(line[0] == "batch_size"):
-        self.batch_size = int(line[1])
-      if(line[0] == "epochs"):
-        self.epochs = int(line[1])
-      if(line[0] == "learning_rate"):
-        self.base_lr = float(line[1])
-      if(line[0] == "bneck_size"):
-        self.bneck_size = int(line[1])
-      if(line[0] == "fc_size"):
-        self.fc_size = int(line[1])
-      if(line[0] == "eta"):
-        self.eta = float(line[1])
-      if(line[0] == "growth"):
-        self.growth = int(line[1])
-    f_write.close()
-    f.close()
-      
+          
     self.num_labels = 2  ## matching and non-matching 
     self.image_size = 64 
     self.num_channels = 2
@@ -207,10 +182,10 @@ class Siamese:
   def metric_model(self):
      ##concatenation of two streams of siamese 
     bneck_combined = tf.concat((self.bneck_1,self.bneck_2),axis=1) 
-    fc_1 = self.fc_layer(bneck_combined,self.fc_size,"fc_1")
+    fc_1 = self.fc_layer(bneck_combined,1024,"fc_1")
     fc_2 = self.fc_layer(fc_1,512,"fc_2")
-    fc_3 = self.fc_layer(fc_2,self.fc_size/2,"fc_3")
-    fc_4 = self.fc_layer(fc_3,self.fc_size/4,"fc_4")
+    fc_3 = self.fc_layer(fc_2,512,"fc_3")
+    fc_4 = self.fc_layer(fc_3,256,"fc_4")
     fc_5 = self.fc_layer(fc_4,2,"fc_5",False)
     return(fc_5)
   def dense_model(self,data):
@@ -350,31 +325,78 @@ def main():
   parser.add_argument("--model_name")
   parser.add_argument("--path_to_training_data")
   parser.add_argument("--path_to_testing_data")
+  parser.add_argument("--batch_size")
+  parser.add_argument("--epochs")
+  parser.add_argument("--learning_rate")
+  parser.add_argument("--eta")
+  parser.add_argument("--growth_rate")
+  parser.add_argument("--fine_tune_model_name")
+
+
+
   args = parser.parse_args()
   if args.model_name:
     model_name = args.model_name
+    print(model_name)
+    raw_input()
+  else:
+    print('please enter the model name')
+    exit()
   if args.path_to_training_data:
     training_data_file_path = args.path_to_training_data
+  else:
+    print('please enter the path to training data')
+    exit()
   if args.path_to_testing_data:
     testing_data_file_path = args.path_to_testing_data
-  siamese_object = Siamese(model_name,training_data_file_path,testing_data_file_path)
+  else:
+    print('please enter the path to testing data')
+    exit()
+  if args.batch_size:
+    batch_size = int(args.batch_size)
+  else:
+    print('setting batch_size to default value 32')
+    batch_size = 32
+  if args.epochs:
+    epochs = int(args.epochs)
+  else:
+    print('setting epochs to default value 5')
+    epochs = 5
+  if args.learning_rate:
+    learning_rate = float(args.learning_rate)
+  else:
+    print('setting learning rate to default value 0.0001')
+    learning_rate = 0.0001
+  if args.eta:
+    eta = float(args.eta)
+  else:
+    print('setting eta to default value 0.0005')
+    eta = 0.0005
+  if args.growth_rate:
+    growth_rate = int(args.growth_rate)
+  else:
+    print('setting growth rate to default value 4')
+    growth_rate = 4
+
+  siamese_object = Siamese(model_name,training_data_file_path,testing_data_file_path,batch_size,
+    epochs,learning_rate,eta,growth_rate)
   sess = tf.InteractiveSession()
   sess.run(tf.global_variables_initializer())
-  vars_ = tf.global_variables()
-
-  model_name = 'models/another_training_before_release_110062.ckpt'
-  new_saver = tf.train.Saver(vars_)
-  new_saver.restore(sess,model_name)
+  trainable_vars = tf.global_variables()
+  if args.fine_tune_model_name:
+    print('fine tuning the model')
+    fine_tune_model_name =  args.fine_tune_model_name
+    new_saver = tf.train.Saver(trainable_vars)
+    new_saver.restore(sess,fine_tune_model_name)
 
   loss_val_train = []
   loss_val_test = []
   accuracy_train = []
   accuracy_test = []
   ###estimate total number of iterations for training for the given epochs
-  total_iteration = int(siamese_object.epochs * siamese_object.iter_per_epochs)
-
+  total_iteration = int(epochs * siamese_object.iter_per_epochs)
   print(total_iteration)
-  model_iteration = int((siamese_object.epochs/2) * siamese_object.iter_per_epochs)
+  model_iteration = int((epochs/2) * siamese_object.iter_per_epochs)
   print(model_iteration)
   saver = tf.train.Saver()
 
