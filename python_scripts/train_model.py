@@ -362,9 +362,9 @@ def main():
   sess.run(tf.global_variables_initializer())
   vars_ = tf.global_variables()
 
- #  model_name = '/home/dewan/code/descriptor_learning/python_scripts/models/another_training_before_release_110062.ckpt'
-  # new_saver = tf.train.Saver(vars_)
-  # new_saver.restore(sess,model_name)
+  model_name = 'models/another_training_before_release_110062.ckpt'
+  new_saver = tf.train.Saver(vars_)
+  new_saver.restore(sess,model_name)
 
   loss_val_train = []
   loss_val_test = []
@@ -406,9 +406,9 @@ def main():
       print("test loss_value %f,%d" % (l,num_iteration))
       print('test accuracy: %.1f%%' % test_accuracy)
       
-      if(num_iteration % model_iteration == 0 and num_iteration > 0):
-        filename_save = 'models/' + model_name + '_' + str(num_iteration) + '.ckpt'
-        saver.save(sess, filename_save)
+    if(num_iteration % model_iteration == 0 and num_iteration > 0):
+      filename_save = 'models/' + model_name + '_' + str(num_iteration) + '.ckpt'
+      saver.save(sess, filename_save)
 
 
   loss_val_train = np.array(loss_val_train)
