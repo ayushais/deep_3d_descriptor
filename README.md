@@ -22,6 +22,13 @@ to the same keypoint have same label. These labels are not used directly for tra
 belonging to same keypoint. 
 
 ### Training the model
+```
+python train_model.py --model_name  --path_to_training_data  --path_to_testing_data  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
+```
+The following paramteres are set to default values:
+1. Item 1
+1. Item 2
+1. Item 3
 
 ```
 python train_model.py --model_name another_training_before_release --path_to_training_data ../dataset/training_data.hdf5 --path_to_testing_data ../dataset/testing_data.hdf5 --batch_size 32 --epochs 5 --learning_rate 0.00001 --eta 0.0005 --growth_rate 4 --fine_tune_model_name models/another_training_before_release_110062.ckpt
