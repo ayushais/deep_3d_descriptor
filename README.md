@@ -33,7 +33,8 @@ If the following paramteres are not provided, they will be set to default values
 5. growth_rate: 4
 
 We recommend the following training procedure. First train the network using the default parameters, then retrain the
-network using a slower learning rate and initialize the weights using the last saved model from the first training.  
+network with learning rate set to 0.00001 and weights initialized using the last saved model from the first training. 
+The path to the trained model can be set using the paramter --fine_tune_model_name .
 
 
 ```
