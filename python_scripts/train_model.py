@@ -248,13 +248,8 @@ class Siamese:
     
     
 ###subtract mean      
-    normalize_subtract = np.ones((2 * batch_size,self.image_size,self.image_size,self.num_channels),dtype=np.float)
-    normalize_subtract[:,:,:,0] = 4.15
-    normalize_subtract[:,:,:,1] = 7.55
-
-    image_left = np.subtract(image_left,normalize_subtract)
-    
-    image_right = np.subtract(image_right,normalize_subtract)
+    image_left[:,:,:,0:2] -= [4.15,7.55] 
+    image_right[:,:,:,0:2] -= [4.15,7.55] 
     return image_left, image_right, label
     
 ###load training data      
@@ -304,13 +299,9 @@ class Siamese:
     image_left = image_left[np.uint8(index_shuffle),:,:,:]
     image_right = image_right[np.uint8(index_shuffle),:,:,:]
 ###subtract mean      
-    normalize_subtract = np.ones((self.batch_size,self.image_size,self.image_size,self.num_channels),dtype=np.float)
-    normalize_subtract[:,:,:,0] = 4.15
-    normalize_subtract[:,:,:,1] = 7.55
+    image_left[:,:,:,0:2] -= [4.15,7.55] 
+    image_right[:,:,:,0:2] -= [4.15,7.55] 
 
-    image_left = np.subtract(image_left,normalize_subtract)
-    
-    image_right = np.subtract(image_right,normalize_subtract)
     return image_left, image_right, label
 
 

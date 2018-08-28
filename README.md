@@ -42,6 +42,16 @@ python train_model.py --model_name another_training_before_release --path_to_tra
 ```
 This command has to be executed in a TensorFlow envionment. 
 
+### Testing the model
+To test the model we provide the code for calculating the FPR-95 error. The model is tested
+on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
+between TPR and FPR and stores the data used for plotting the curve.
+
+```
+python test_model.py --path_to_saved_model  --path_to_testing_data  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
+
+```
+
 ## C++ API
 
 git clone command goes here
