@@ -32,6 +32,10 @@ If the following paramteres are not provided, they will be set to default values
 4. eta: 0.0005
 5. growth_rate: 4
 
+We recommend the following training procedure. First train the network using the default parameters, then retrain the
+network using a slower learning rate and initialize the weights using the last saved model from the first training.  
+
+
 ```
 python train_model.py --model_name another_training_before_release --path_to_training_data ../dataset/training_data.hdf5 --path_to_testing_data ../dataset/testing_data.hdf5 --batch_size 32 --epochs 5 --learning_rate 0.00001 --eta 0.0005 --growth_rate 4 --fine_tune_model_name models/another_training_before_release_110062.ckpt
 
