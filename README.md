@@ -37,7 +37,6 @@ network with learning rate set to 0.00001 and weights initialized using the last
 The path to the trained model can be set using the paramter --fine_tune_model_name. This traning procedure can be
 completed by executing following bash script.
 
-This command has to be executed in a TensorFlow envionment. 
 
 ```
 ./train_model.bash model_name path_to_training_data path_to_testing_data path_to_store_models
