@@ -23,7 +23,7 @@ belonging to same keypoint.
 
 ### Training the model
 ```
-python train_model.py --model_name  --path_to_training_data  --path_to_testing_data  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
+python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
 ```
 If the following paramteres are not provided, they will be set to default values
 1. batch_size: 32

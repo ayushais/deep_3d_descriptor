@@ -316,6 +316,7 @@ def main():
   parser.add_argument("--model_name")
   parser.add_argument("--path_to_training_data")
   parser.add_argument("--path_to_testing_data")
+  parser.add_argument("--path_to_store_models")
   parser.add_argument("--batch_size")
   parser.add_argument("--epochs")
   parser.add_argument("--learning_rate")
@@ -341,6 +342,13 @@ def main():
   else:
     print('please enter the path to testing data')
     exit()
+    
+  if args.path_to_store_models:
+    path_to_store_models = args.path_to_store_models
+  else:
+    print('please enter the path to testing data')
+    exit()
+
   if args.batch_size:
     batch_size = int(args.batch_size)
   else:
@@ -416,26 +424,19 @@ def main():
       print('test accuracy: %.1f%%' % test_accuracy)
       
     if(num_iteration % model_iteration == 0 and num_iteration > 0):
-      filename_save = 'models/' + model_name + '_' + str(num_iteration) + '.ckpt'
+      filename_save = path_to_store_models + model_name + '_' + str(num_iteration) + '.ckpt'
       saver.save(sess, filename_save)
 
 
   loss_val_train = np.array(loss_val_train)
-  filename_save = "results/" + model_name + "_train_loss.txt"
+  filename_save = path_to_store_models + model_name + "_train_loss.txt"
   np.savetxt(filename_save,loss_val_train,fmt="%10.5f")
   
   loss_val_test = np.array(loss_val_test)
-  filename_save = "results/" + model_name + "_test_loss.txt"
+  filename_save = path_to_store_models + model_name + "_test_loss.txt"
   np.savetxt(filename_save,loss_val_test,fmt="%10.5f")
   
-  accuracy_train = np.array(accuracy_train)
-  filename_save = "results/" + model_name + "_train_accuracy.txt"
-  np.savetxt(filename_save,accuracy_train,fmt="%10.5f")
 
-  accuracy_test = np.array(accuracy_test)
-  filename_save = "results/" + model_name + "_test_accuracy.txt"
-  np.savetxt(filename_save,accuracy_test,fmt="%10.5f")
- 
 
 
 
