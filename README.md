@@ -12,7 +12,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 ### Dataset
 ```
-./download_data_network.sh
+./download_dataset.sh
 
 ```
 This will download the dataset used for training and testing. The data is the format
@@ -34,13 +34,17 @@ If the following paramteres are not provided, they will be set to default values
 
 We recommend the following training procedure. First train the network using the default parameters, then retrain the
 network with learning rate set to 0.00001 and weights initialized using the last saved model from the first training. 
-The path to the trained model can be set using the paramter --fine_tune_model_name .
+The path to the trained model can be set using the paramter --fine_tune_model_name. This traning procedure can be
+completed by executing following bash script.
 
-```
-python train_model.py --model_name another_training_before_release --path_to_training_data ../dataset/training_data.hdf5 --path_to_testing_data ../dataset/testing_data.hdf5 --batch_size 32 --epochs 5 --learning_rate 0.00001 --eta 0.0005 --growth_rate 4 --fine_tune_model_name models/another_training_before_release_110062.ckpt
-
-```
 This command has to be executed in a TensorFlow envionment. 
+
+```
+./train_model.bash model_name path_to_training_data path_to_testing_data path_to_store_models
+
+```
+
+
 
 ### Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
