@@ -246,7 +246,7 @@ class Siamese:
     image_left = np.concatenate((image_left_positive,image_left_negative),axis = 0)
     image_right = np.concatenate((image_right_positive,image_right_negative),axis = 0)
     
-    
+    print('loading test data')
 ###subtract mean      
     image_left[:,:,:,0:2] -= [4.15,7.55] 
     image_right[:,:,:,0:2] -= [4.15,7.55] 
@@ -255,6 +255,7 @@ class Siamese:
 ###load training data      
 ### input to the network is a batch of equal number of positive and negative examples    
   def load_batch(self,step):
+
 
 ###estimate offset to get the index from which new data has to retreived        
     offset_positive = (step * int(self.batch_size/2)) % (self.positive_combination.shape[0] - int(self.batch_size/2))
