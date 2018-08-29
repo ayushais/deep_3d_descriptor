@@ -22,6 +22,9 @@ to the same keypoint have same label. These labels are not used directly for tra
 belonging to same keypoint. 
 
 ### Training the model
+All the files required for training and testing the model is in python_scripts folder. To train the model following
+script has to be execcuted. 
+
 ```
 python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
 ```
@@ -31,6 +34,9 @@ If the following paramteres are not provided, they will be set to default values
 3. learning_rate: 0.0001
 4. eta: 0.0005
 5. growth_rate: 4
+
+The training file, will store two Tensorflow ckpts file. One when half of the training is completed and the other one
+when the training is completed. 
 
 We recommend the following training procedure. First train the network using the default parameters, then retrain the
 network with learning rate set to 0.00001 and weights initialized using the last saved model from the first training. 
@@ -43,16 +49,13 @@ completed by executing following bash script.
 
 ```
 
-
-
 ### Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
 on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
 between TPR and FPR and stores the data used for plotting the curve.
 
 ```
-python test_model.py --path_to_saved_model  --path_to_testing_data  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name 
-
+python test_model.py --path_to_saved_model  --path_to_testing_data 
 ```
 
 ## C++ API
@@ -185,44 +188,6 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 ```
 
 
-
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
@@ -232,12 +197,6 @@ See also the list of [contributors](https://github.com/your/project/contributors
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
 
 
 
