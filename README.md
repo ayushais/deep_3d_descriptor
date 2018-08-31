@@ -23,7 +23,7 @@ belonging to same keypoint.
 
 ### Training the model
 All the files required for training and testing the model is in python_scripts folder. To train the model following
-script has to be execcuted. 
+script has to be executed. 
 
 ```
 python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name --path_to_store_models 
