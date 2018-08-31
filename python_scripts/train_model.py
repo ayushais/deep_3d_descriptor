@@ -346,7 +346,7 @@ def main():
   if args.path_to_store_models:
     path_to_store_models = args.path_to_store_models
   else:
-    print('please enter the path to testing data')
+    print('please enter the path to store models')
     exit()
 
   if args.batch_size:
@@ -383,6 +383,7 @@ def main():
   if args.fine_tune_model_name:
     print('fine tuning the model')
     fine_tune_model_name =  args.fine_tune_model_name
+    print(fine_tune_model_name)
     new_saver = tf.train.Saver(trainable_vars)
     new_saver.restore(sess,fine_tune_model_name)
 
