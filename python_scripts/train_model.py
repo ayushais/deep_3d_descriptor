@@ -383,10 +383,8 @@ def main():
   if args.fine_tune_model_name:
     print('fine tuning the model')
     fine_tune_model_name =  args.fine_tune_model_name
-    print(fine_tune_model_name)
     new_saver = tf.train.Saver(trainable_vars)
-    new_saver.restore(sess,fine_tune_model_name)
-
+    new_saver.restore(sess,fine_tune_model_name+'.ckpt')
   loss_val_train = []
   loss_val_test = []
   accuracy_train = []

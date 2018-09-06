@@ -165,7 +165,7 @@ def main():
     results = np.concatenate((TP_vec,FP_vec),axis = 1)
 ####storing TPR and FPR for plotting the curve
     print('fpr_score %f'%FP_vec[min(enumerate(min_list), key=itemgetter(1))[0]])
-    save_file = 'results/results_fpr_' + filename + '.csv'
+    save_file = path + filename + '.csv'
     np.savetxt(save_file,results,delimiter=',',fmt='%10.5f')
     plt.figure(2)
     plt.plot(FP_vec,TP_vec,'g')

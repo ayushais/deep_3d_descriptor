@@ -9,7 +9,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 ### Prerequisites
 
 * [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
-
+* [Pyhton 2.7]
 ### Dataset
 ```
 ./download_dataset.sh
