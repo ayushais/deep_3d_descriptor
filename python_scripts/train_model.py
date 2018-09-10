@@ -323,6 +323,7 @@ def main():
   parser.add_argument("--eta")
   parser.add_argument("--growth_rate")
   parser.add_argument("--fine_tune_model_name")
+  parser.add_argument("--number_of_models_stored")
 
 
 
@@ -374,6 +375,11 @@ def main():
   else:
     print('setting growth rate to default value 4')
     growth_rate = 4
+  if args.number_of_models_stored:
+    number_of_models_stored = int(args.number_of_models_stored)
+  else:
+    print('setting number of models stored to default value 2')
+    number_of_models_stored = 2
 
   siamese_object = Siamese(model_name,training_data_file_path,testing_data_file_path,batch_size,
     epochs,learning_rate,eta,growth_rate)
@@ -392,7 +398,7 @@ def main():
   ###estimate total number of iterations for training for the given epochs
   total_iteration = int(epochs * siamese_object.iter_per_epochs)
   print(total_iteration)
-  model_iteration = int((epochs/2) * siamese_object.iter_per_epochs)
+  model_iteration = int((epochs/number_of_models_stored) * siamese_object.iter_per_epochs)
   print(model_iteration)
   saver = tf.train.Saver()
 
