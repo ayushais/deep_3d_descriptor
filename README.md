@@ -28,7 +28,8 @@ All the files required for training and testing the model is in python_scripts f
 script has to be executed. 
 
 ```
-python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name --path_to_store_models 
+python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name --path_to_store_models  --number_of_models_stored
+
 
 ```
 If the following paramteres are not provided, they will be set to default values
@@ -37,6 +38,7 @@ If the following paramteres are not provided, they will be set to default values
 3. learning_rate: 0.0001
 4. eta: 0.0005
 5. growth_rate: 4
+6. number_of_models_stored: 2
 
 The training file, will store two Tensorflow ckpts file. One when half of the training is completed and the other one
 when the training is completed. We recommend the following training procedure. First train the network using the default parameters, then retrain the
