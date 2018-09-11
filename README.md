@@ -46,7 +46,7 @@ Then retrain the network with learning rate set to 0.00001 and weights initializ
 last saved model from the first training. The path to the trained model can be set using the paramter 
 --fine_tune_model_name. 
 
-Example commands for completing the above mention training procedure is mentioned below:
+Example commands for completing the above mentioned training procedure:
 
 ```
 python train_model.py --model_name  my_model --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5
@@ -57,11 +57,6 @@ learned_models/my_model_110062
 ```
 
 
-
-
-
-
-
 ### Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
 on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
@@ -69,7 +64,16 @@ between TPR and FPR and stores the data used for plotting the curve.
 
 ```
 python test_model.py --path_to_saved_model  --path_to_testing_data 
+
 ```
+
+Example command for testing a trained model
+```
+python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031  --path_to_testing_data ../dataset/testing_data.hdf5
+
+```
+
+
 
 ## C++ API
 
