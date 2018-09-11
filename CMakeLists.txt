@@ -18,10 +18,9 @@ find_package(Boost REQUIRED COMPONENTS system)
 FIND_PACKAGE ( Threads REQUIRED )
 
 
-set(THRIFT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/include/)
-include_directories(${THRIFT_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/gen-cpp)
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/lib/)
+#set(THRIFT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/include/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/gen-cpp)
+#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/lib/)
 
 find_package(OpenMP)
 if (OPENMP_FOUND)

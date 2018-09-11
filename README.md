@@ -86,25 +86,16 @@ We recommend installing TensorFlow in a virtual environment
 * [PCL 1.8]:(https://github.com/PointCloudLibrary/pcl)
 
 * [OpenCV]: (https://github.com/opencv/opencv)
-
+* [thrift]: (https://thrift.apache.org/download) 
 For both C++ and Python
 
 ### Installing
-
-Install thrift
-
-```
-cd external
-./install_thrift.sh
-
-```
 
 In the Tensorflow environment
 ```
 pip install thrift
 
 ```
-
 
 In the project directory
 
