@@ -1,6 +1,6 @@
 # deep_3D_descriptor
 
-Code for the paper "Learning Local Feature Descriptors for 3D LiDAR Scans".
+Code for the paper "Learning a Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
@@ -10,6 +10,8 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 * [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
 * [Pyhton 2.7]
+
+
 ### Dataset
 ```
 ./download_dataset.sh
