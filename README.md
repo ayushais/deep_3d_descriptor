@@ -10,7 +10,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 * [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
 * [Pyhton 2.7]
-
+* [h5py]
 
 ### Dataset
 ```
@@ -30,7 +30,6 @@ script has to be executed.
 ```
 python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name --path_to_store_models  --number_of_models_stored
 
-
 ```
 If the following paramteres are not provided, they will be set to default values
 1. batch_size: 32
@@ -39,11 +38,28 @@ If the following paramteres are not provided, they will be set to default values
 4. eta: 0.0005
 5. growth_rate: 4
 6. number_of_models_stored: 2
+7. path_to_store_models: learned_models/
 
-The training file, will store two Tensorflow ckpts file. One when half of the training is completed and the other one
-when the training is completed. We recommend the following training procedure. First train the network using the default parameters, then retrain the
-network with learning rate set to 0.00001 and weights initialized using the last saved model from the first training. 
-The path to the trained model can be set using the paramter --fine_tune_model_name. 
+
+We recommend the following training procedure. Train the network with the default parameters.
+Then retrain the network with learning rate set to 0.00001 and weights initialized using the 
+last saved model from the first training. The path to the trained model can be set using the paramter 
+--fine_tune_model_name. 
+
+Example commands for completing the above mention training procedure is mentioned below:
+
+```
+python train_model.py --model_name  my_model --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5
+
+python train_model.py --model_name  my_model_retrain --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5 --learning_rate 0.00001 --fine_tune_model_name
+learned_models/my_model_110062
+
+```
+
+
+
+
+
 
 
 ### Testing the model
