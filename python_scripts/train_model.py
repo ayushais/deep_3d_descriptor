@@ -347,8 +347,9 @@ def main():
   if args.path_to_store_models:
     path_to_store_models = args.path_to_store_models
   else:
-    print('please enter the path to store models')
-    exit()
+
+    print('models will be store in learned_models/')
+    path_to_store_models = "learned_models/"
 
   if args.batch_size:
     batch_size = int(args.batch_size)

@@ -77,10 +77,6 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ## C++ API
 
-git clone command goes here
-command for downloading the dataset
-
-
 ### Prerequisites
 
 * [Tensorflow]:(https://www.tensorflow.org/install/install_linux) 
