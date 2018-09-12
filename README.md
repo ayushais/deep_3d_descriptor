@@ -17,7 +17,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 ./download_dataset.sh
 
 ```
-This will download the dataset used for training and testing. The data is the format
+This will download the dataset used for training and testing. The data is in the format
 NxCxHxW and is stored in hdf5 files. The first channel corresponds to the depth value and the second
 channel corresponds to the LiDAR intensity value. For every example there is a label and all the examples corresponding
 to the same keypoint have same label. These labels are not used directly for training but only to identify examples
@@ -182,12 +182,12 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
  
 ```
 
-python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 0
+python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
 
 ```
 
 ```
-./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
+./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
 ```
 
@@ -197,10 +197,6 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 
 

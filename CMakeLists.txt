@@ -8,19 +8,18 @@ find_package(PCL 1.8 REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-MESSAGE(${PCL_INCLUDE_DIRS})
  
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIBRARY_DIRS})
 
 find_package(Boost REQUIRED COMPONENTS system)
-FIND_PACKAGE ( Threads REQUIRED )
+find_package (Threads REQUIRED)
 
 
-#set(THRIFT_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/include/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/gen-cpp)
-#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/external/thrift-0.11.0/lib/)
+
+link_directories("/usr/local/lib")
 
 find_package(OpenMP)
 if (OPENMP_FOUND)
