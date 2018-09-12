@@ -17,7 +17,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 find_package (Threads REQUIRED)
 
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/gen-cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/python_cpp/)
 
 link_directories("/usr/local/lib")
 

@@ -137,31 +137,31 @@ int main(int argc,char **argv)
   std::cout << "number of keypoints for cloud 2: " << keypoints_target->points.size() << std::endl;
 
 
-  Deep3DDescriptor deep_feature;
+  Deep3DDescriptor estimate_deep_descriptor;
 
-  deep_feature.setInputCloud(input_cloud_source);
-  deep_feature.setKeypoints(keypoints_source);
-  deep_feature.setRadius(neighbourhood_radius);
-  FeatureCloud deep_features_source;
-  deep_feature.compute(deep_features_source);
+  estimate_deep_descriptor.setInputCloud(input_cloud_source);
+  estimate_deep_descriptor.setKeypoints(keypoints_source);
+  estimate_deep_descriptor.setRadius(neighbourhood_radius);
+  DescriptorCloud deep_descriptors_source;
+  estimate_deep_descriptor.compute(deep_descriptors_source);
 
-  IntensityCloud selected_keypoints_source = deep_feature.getSelectedKeypoints();
+  IntensityCloud selected_keypoints_source = estimate_deep_descriptor.getSelectedKeypoints();
 
 
-  deep_feature.setInputCloud(input_cloud_target);
-  deep_feature.setKeypoints(keypoints_target);
-  deep_feature.setRadius(neighbourhood_radius);
-  FeatureCloud deep_features_target;
-  deep_feature.compute(deep_features_target);
-  IntensityCloud selected_keypoints_target = deep_feature.getSelectedKeypoints();
+  estimate_deep_descriptor.setInputCloud(input_cloud_target);
+  estimate_deep_descriptor.setKeypoints(keypoints_target);
+  estimate_deep_descriptor.setRadius(neighbourhood_radius);
+  DescriptorCloud deep_descriptors_target;
+  estimate_deep_descriptor.compute(deep_descriptors_target);
+  IntensityCloud selected_keypoints_target = estimate_deep_descriptor.getSelectedKeypoints();
   pcl::CorrespondencesPtr correspondences(new pcl::Correspondences);
 
   if(use_metric == 1)
   {
     std::cout << "using metric learning for matching features" << std::endl;
     MatchDeep3DDescriptor est_deep_correspondences;
-    est_deep_correspondences.setFeatureSource(deep_features_source);
-    est_deep_correspondences.setFeatureTarget(deep_features_target);
+    est_deep_correspondences.setFeatureSource(deep_descriptors_source);
+    est_deep_correspondences.setFeatureTarget(deep_descriptors_target);
     est_deep_correspondences.estimateCorrespondences(*correspondences);
   }
 
@@ -170,16 +170,16 @@ int main(int argc,char **argv)
 
 
     std::cout << "using Euclidean metric" << std::endl;
-    for(size_t index_source = 0; index_source < deep_features_source.points.size(); ++index_source)
+    for(size_t index_source = 0; index_source < deep_descriptors_source.points.size(); ++index_source)
     {
       float min_distance = std::numeric_limits<float>::max();
       int min_index = -1;
-      for(size_t index_target = 0; index_target < deep_features_target.points.size(); ++index_target)
+      for(size_t index_target = 0; index_target < deep_descriptors_target.points.size(); ++index_target)
       {
 
 
-        float distance = pcl::L2_Norm(deep_features_source.points[index_source].descriptor,
-            deep_features_target.points[index_target].descriptor,kDescriptorSize);
+        float distance = pcl::L2_Norm(deep_descriptors_source.points[index_source].descriptor,
+            deep_descriptors_target.points[index_target].descriptor,kDescriptorSize);
         if(distance < min_distance)
         {
           min_index = index_target;

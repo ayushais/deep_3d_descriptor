@@ -6,8 +6,8 @@ using namespace apache::thrift::transport;
 
 MatchDeep3DDescriptor::MatchDeep3DDescriptor(){}
 
-void MatchDeep3DDescriptor::setFeatureSource(const FeatureCloud &feature_source_input) {features_source_ = feature_source_input;}
-void MatchDeep3DDescriptor::setFeatureTarget(const FeatureCloud &feature_target_input) {features_target_ = feature_target_input;}
+void MatchDeep3DDescriptor::setFeatureSource(const DescriptorCloud &feature_source_input) {features_source_ = feature_source_input;}
+void MatchDeep3DDescriptor::setFeatureTarget(const DescriptorCloud &feature_target_input) {features_target_ = feature_target_input;}
 
 
 void MatchDeep3DDescriptor::estimateCorrespondences(pcl::Correspondences &correspondences)

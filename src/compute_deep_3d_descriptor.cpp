@@ -2,11 +2,6 @@
 
 int main(int argc,char **argv)
 {
-/*  if(argc < 6)*/
-  //{
-    //std::cerr << "The input is path to the pointcloud, the neighbourhood radius  and sampling radius" << std::endl;
-    //return(1);
-  /*}*/
 
   boost::filesystem::path input_path;
   float neighbourhood_radius;
@@ -74,14 +69,14 @@ int main(int argc,char **argv)
   uniform_sampling.setRadiusSearch(sampling_radius);
   uniform_sampling.filter(*cloud_filter);
   std::cout << "number of keypoins: " << cloud_filter->points.size() << std::endl;
-  Deep3DDescriptor deep_feature;
+  Deep3DDescriptor estimate_deep_descriptor;
 ///computing feature descriptors
-  deep_feature.setInputCloud(input_cloud);
-  deep_feature.setKeypoints(cloud_filter);
-  deep_feature.setRadius(neighbourhood_radius);
-  FeatureCloud deep_features;
-  deep_feature.compute(deep_features);
-  std::cout << "total number of features computed are: " << deep_features.points.size() << std::endl;
+  estimate_deep_descriptor.setInputCloud(input_cloud);
+  estimate_deep_descriptor.setKeypoints(cloud_filter);
+  estimate_deep_descriptor.setRadius(neighbourhood_radius);
+  DescriptorCloud deep_descriptors;
+  estimate_deep_descriptor.compute(deep_descriptors);
+  std::cout << "total number of features computed are: " << deep_descriptors.points.size() << std::endl;
 
 
 }
