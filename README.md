@@ -67,7 +67,11 @@ on 50,000 positive and negative image patches from the testing data. This script
 between TPR and FPR and stores the data used for plotting the curve.
 
 ```
-python test_model.py --path_to_saved_model  --path_to_testing_data 
+python test_model.py 
+
+Parameters
+--path_to_saved_model
+--path_to_testing_data 
 
 ```
 
@@ -81,7 +85,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ## 2. C++ API
 
-### Prerequisites
+### 2.1 Prerequisites
 
 * [Tensorflow]: (https://www.tensorflow.org/install/install_linux) 
 
@@ -90,16 +94,10 @@ We recommend installing TensorFlow in a virtual environment
 * [PCL 1.8]: (https://github.com/PointCloudLibrary/pcl)
 
 * [OpenCV]: (https://github.com/opencv/opencv)
-* [thrift]: (https://thrift.apache.org/download) 
+* [Thrift]: (https://thrift.apache.org/download) 
 For both C++ and Python
 
-### Installing
-
-In the Tensorflow environment
-```
-pip install thrift
-
-```
+### 2.2 Installing
 
 In the project directory
 
@@ -115,7 +113,7 @@ In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL 
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
 
-## Downloading the test pointcloud
+## 2.3. Downloading the test pointcloud
 
 ```
 ./download_test_pcd.sh
@@ -125,7 +123,7 @@ The name format for the files is seq_scan_trackID_object.pcd.
  'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given
 sequence. 'trackID' is the object ID provided by the benchmark. For instance '0011_126_14_object.pcd' and 
 '0011_127_14_object.pcd' are the same objects in two consecutive scans.
-## Downloading the models
+## 2.4. Downloading the models
 
 ```
 ./download_models.sh
@@ -137,7 +135,7 @@ a metric for matching the descriptors and a feature descriptor learned using hin
 
 
 
-## Using the learned descriptor with PCL
+## 2.5. Using the learned descriptor with PCL
 
 We provide a service and client API for using the learned feature descriptor with PCL.
 
@@ -145,7 +143,11 @@ All the Thrift related code and the python service file is in the folder python_
 
 The service has to be started within the tensorflow environment
 ```
-python python_server.py --model_name --using_hinge_loss
+python python_server.py 
+
+Parameters
+--model_name 
+--using_hinge_loss
 
 ```
 We provide two test files, the first one for computing a feature descriptor and 
@@ -153,7 +155,12 @@ the second one for matching the descriptors.
 
 For computing feature descriptor 
 ```
-./compute_deep_3d_feature --path_to_pcd_file  --feature_neighborhood_radius --sampling_radius_for_keypoints
+./compute_deep_3d_feature 
+
+Parameters
+--path_to_pcd_file  
+--feature_neighborhood_radius 
+--sampling_radius_for_keypoints
 
 ```
 
@@ -161,14 +168,19 @@ For visualizing the correspondences between the descriptors and aligning the poi
 For aligning the pointclouds, we provide an option of using RANSAC. If RANSAC option is enabled, then the correspondences shown
 are from the inlier set estimated by RANSAC. 
 ```
-./visualize_deep_3d_feature_correspondences --path_to_source_pcd_file --sampling_radius_source 
- --path_to_target_pcd_file --sampling_radius_target --feature_neighborhood_radius 
- --use_learned_metric --use_ransac
+./visualize_deep_3d_feature_correspondences 
+
+Parameters
+--path_to_source_pcd_file 
+--sampling_radius_source 
+--path_to_target_pcd_file 
+--sampling_radius_target 
+--feature_neighborhood_radius 
+--use_learned_metric 
+--use_ransac
 
 ```
-
-### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
-
+### 2.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
 
 In the Tensorflow environment. python_server.py is in the python_cpp folder
 
@@ -182,7 +194,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 
 ```
 
-### Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
+### 2.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
  
 ```
 
@@ -194,14 +206,5 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
 ```
-
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-
 
 
