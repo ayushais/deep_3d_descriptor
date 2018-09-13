@@ -1,14 +1,14 @@
-# deep_3D_descriptor
+# Deep 3D Descriptor
 
 Code for the paper "Learning a Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
 
-## Training the Network 
+## 1. Training the Network 
 ### Prerequisites
 
-* [Tensorflow]:(https://www.tensorflow.org/install/install_linux)
+* [Tensorflow]: (https://www.tensorflow.org/install/install_linux)
 * [Pyhton 2.7]
 * [h5py]
 
@@ -28,7 +28,21 @@ All the files required for training and testing the model is in python_scripts f
 script has to be executed. 
 
 ```
-python train_model.py --model_name  --path_to_training_data  --path_to_testing_data --path_to_store_models  --batch_size --epochs  --learning_rate  --eta  --growth_rate  --fine_tune_model_name --path_to_store_models  --number_of_models_stored
+python train_model.py 
+
+Parameters
+--model_name  
+--path_to_training_data  
+--path_to_testing_data 
+--path_to_store_models  
+--batch_size 
+--epochs  
+--learning_rate  
+--eta  
+--growth_rate  
+--fine_tune_model_name 
+--path_to_store_models  
+--number_of_models_stored
 
 ```
 If the following paramteres are not provided, they will be set to default values
@@ -79,11 +93,11 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### Prerequisites
 
-* [Tensorflow]:(https://www.tensorflow.org/install/install_linux) 
+* [Tensorflow]: (https://www.tensorflow.org/install/install_linux) 
 
 We recommend installing TensorFlow in a virtual environment
 
-* [PCL 1.8]:(https://github.com/PointCloudLibrary/pcl)
+* [PCL 1.8]: (https://github.com/PointCloudLibrary/pcl)
 
 * [OpenCV]: (https://github.com/opencv/opencv)
 * [thrift]: (https://thrift.apache.org/download) 
