@@ -44,15 +44,6 @@ Parameters
 --number_of_models_stored (default: 2)
 
 ```
-If the following paramteres are not provided, they will be set to default values
-1. batch_size: 32
-2. epochs: 5
-3. learning_rate: 0.0001
-4. eta: 0.0005
-5. growth_rate: 4
-6. number_of_models_stored: 2
-7. path_to_store_models: learned_models/
-
 
 We recommend the following training procedure. Train the network with the default parameters.
 Then retrain the network with learning rate set to 0.00001 and weights initialized using the 
