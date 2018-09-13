@@ -34,15 +34,14 @@ Parameters
 --model_name  
 --path_to_training_data  
 --path_to_testing_data 
---path_to_store_models  
---batch_size 
---epochs  
---learning_rate  
---eta  
---growth_rate  
 --fine_tune_model_name 
---path_to_store_models  
---number_of_models_stored
+--path_to_store_models (default: learned_models/)  
+--batch_size (default: 32)
+--epochs  (default: 5)
+--learning_rate (default: 0.0001)
+--eta  (default: 0.0005)
+--growth_rate  (default: 4)
+--number_of_models_stored (default: 2)
 
 ```
 If the following paramteres are not provided, they will be set to default values
