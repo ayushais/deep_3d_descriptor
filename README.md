@@ -6,13 +6,13 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 
 ## 1. Training the Network 
-### Prerequisites
+### 1.1 Prerequisites
 
 * [Tensorflow]: (https://www.tensorflow.org/install/install_linux)
 * [Pyhton 2.7]
 * [h5py]
 
-### Dataset
+### 1.2 Dataset
 ```
 ./download_dataset.sh
 
@@ -23,7 +23,7 @@ channel corresponds to the LiDAR intensity value. For every example there is a l
 to the same keypoint have same label. These labels are not used directly for training but only to identify examples
 belonging to same keypoint. 
 
-### Training the model
+### 1.3 Training the model
 All the files required for training and testing the model is in python_scripts folder. To train the model following
 script has to be executed. 
 
@@ -61,7 +61,7 @@ learned_models/my_model_110062
 ```
 
 
-### Testing the model
+### 1.4 Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
 on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
 between TPR and FPR and stores the data used for plotting the curve.
@@ -79,7 +79,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 
 
-## C++ API
+## 2 C++ API
 
 ### Prerequisites
 
