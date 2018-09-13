@@ -79,7 +79,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 
 
-## 2 C++ API
+## 2. C++ API
 
 ### Prerequisites
 
