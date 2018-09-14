@@ -87,14 +87,14 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### 2.1 Prerequisites
 
-[Tensorflow] (https://www.tensorflow.org/install/install_linux) 
+* [Tensorflow] (https://www.tensorflow.org/install/install_linux) 
 
 We recommend installing TensorFlow in a virtual environment
 
-* [PCL 1.8]: (https://github.com/PointCloudLibrary/pcl)
+* [PCL 1.8] (https://github.com/PointCloudLibrary/pcl)
 
-* [OpenCV]: (https://github.com/opencv/opencv)
-* [Thrift]: (https://thrift.apache.org/download) 
+* [OpenCV] (https://github.com/opencv/opencv)
+* [Thrift] (https://thrift.apache.org/download) 
 For both C++ and Python
 
 ### 2.2 Installing
