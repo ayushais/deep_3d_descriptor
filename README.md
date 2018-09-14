@@ -9,8 +9,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 ### Publication
 
-Ayush Dewan, Tim Caselitz and Wolfram Burgard. **Learning a Local Feature Descriptor for 3D LiDAR Scans**. 
-  *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018.*
+Ayush Dewan, Tim Caselitz and Wolfram Burgard. **Learning a Local Feature Descriptor for 3D LiDAR Scans**.  *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018.*
 
 
 
