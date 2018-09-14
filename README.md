@@ -8,7 +8,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 ## 1. Training the Network 
 ### 1.1 Prerequisites
 
-* [Tensorflow] (https://www.tensorflow.org/install/install_linux)
+*  Tensorflow 1.2.1
 *  Pyhton 2.7
 *  h5py
 
@@ -87,7 +87,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### 2.1 Prerequisites
 
-* [Tensorflow] (https://www.tensorflow.org/install/install_linux) 
+* Tensorflow 1.2.1  
 
 We recommend installing TensorFlow in a virtual environment
 
