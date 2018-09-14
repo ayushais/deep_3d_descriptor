@@ -10,7 +10,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 
 *  Tensorflow 1.2.1
 *  Pyhton 2.7
-*  h5py
+*  H5py
 
 ### 1.2. Dataset
 ```
@@ -87,7 +87,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### 2.1 Prerequisites
 
-* Tensorflow 1.2.1  
+* Tensorflow   
 
 We recommend installing TensorFlow in a virtual environment
 
