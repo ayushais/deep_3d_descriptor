@@ -8,9 +8,9 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 ## 1. Training the Network 
 ### 1.1 Prerequisites
 
-* [Tensorflow]: (https://www.tensorflow.org/install/install_linux)
-* [Pyhton 2.7]
-* [h5py]
+* [Tensorflow] (https://www.tensorflow.org/install/install_linux)
+*  Pyhton 2.7
+*  h5py
 
 ### 1.2 Dataset
 ```
