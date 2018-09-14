@@ -50,7 +50,7 @@ Then retrain the network with learning rate set to 0.00001 and weights initializ
 last saved model from the first training. The path to the trained model can be set using the paramter 
 --fine_tune_model_name. 
 
-Example commands for completing the above mentioned training procedure:
+#### 1.3.1. Example commands for completing the above mentioned training procedure:
 
 ```
 python train_model.py --model_name  my_model --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5
@@ -75,7 +75,7 @@ Parameters
 
 ```
 
-Example command for testing a trained model
+#### 1.4.1. Example command for testing a trained model
 ```
 python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031  --path_to_testing_data ../dataset/testing_data.hdf5
 
