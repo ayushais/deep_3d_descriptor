@@ -87,7 +87,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### 2.1 Prerequisites
 
-* [Tensorflow]: (https://www.tensorflow.org/install/install_linux) 
+[Tensorflow]: (https://www.tensorflow.org/install/install_linux) 
 
 We recommend installing TensorFlow in a virtual environment
 
@@ -113,7 +113,7 @@ In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL 
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
 
-## 2.3. Downloading the test pointcloud
+### 2.3. Downloading the test pointcloud
 
 ```
 ./download_test_pcd.sh
@@ -123,7 +123,7 @@ The name format for the files is seq_scan_trackID_object.pcd.
  'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given
 sequence. 'trackID' is the object ID provided by the benchmark. For instance '0011_126_14_object.pcd' and 
 '0011_127_14_object.pcd' are the same objects in two consecutive scans.
-## 2.4. Downloading the models
+### 2.4. Downloading the models
 
 ```
 ./download_models.sh
@@ -135,7 +135,7 @@ a metric for matching the descriptors and a feature descriptor learned using hin
 
 
 
-## 2.5. Using the learned descriptor with PCL
+### 2.5. Using the learned descriptor with PCL
 
 We provide a service and client API for using the learned feature descriptor with PCL.
 
