@@ -12,7 +12,7 @@ the feature descriptors. We also provide a C++ library for using the learned fea
 *  Pyhton 2.7
 *  h5py
 
-### 1.2 Dataset
+### 1.2. Dataset
 ```
 ./download_dataset.sh
 
@@ -23,7 +23,7 @@ channel corresponds to the LiDAR intensity value. For every example there is a l
 to the same keypoint have same label. These labels are not used directly for training but only to identify examples
 belonging to same keypoint. 
 
-### 1.3 Training the model
+### 1.3. Training the model
 All the files required for training and testing the model is in python_scripts folder. To train the model following
 script has to be executed. 
 
@@ -37,10 +37,10 @@ Parameters
 --fine_tune_model_name 
 --path_to_store_models (default: learned_models/)  
 --batch_size (default: 32)
---epochs  (default: 5)
+--epochs (default: 5)
 --learning_rate (default: 0.0001)
---eta  (default: 0.0005)
---growth_rate  (default: 4)
+--eta (default: 0.0005)
+--growth_rate (default: 4)
 --number_of_models_stored (default: 2)
 
 ```
@@ -61,7 +61,7 @@ learned_models/my_model_110062
 ```
 
 
-### 1.4 Testing the model
+### 1.4. Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
 on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
 between TPR and FPR and stores the data used for plotting the curve.
@@ -182,7 +182,7 @@ Parameters
 --use_ransac
 
 ```
-### 2.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
+#### 2.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
 
 In the Tensorflow environment. python_server.py is in the python_cpp folder
 
@@ -196,10 +196,9 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 
 ```
 
-### 2.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
+#### 2.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
  
 ```
-
 python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
 
 ```
@@ -208,7 +207,6 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
 ```
-
 If you use our dataset or the code, please cite the following paper
 ```
 @inproceedings{dewan2018iros,
