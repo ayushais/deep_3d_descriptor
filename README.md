@@ -87,7 +87,7 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 ### 2.1 Prerequisites
 
-[Tensorflow]: (https://www.tensorflow.org/install/install_linux) 
+[Tensorflow] (https://www.tensorflow.org/install/install_linux) 
 
 We recommend installing TensorFlow in a virtual environment
 
