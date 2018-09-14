@@ -208,7 +208,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 ```
 
 If you use our dataset or the code, please cite the following paper
-\cite{
+```
   OpenSourceSurvey17,
   author = {GitHub, Inc.},
   title = {Open Source Survey},
@@ -216,6 +216,6 @@ If you use our dataset or the code, please cite the following paper
   publisher = {GitHub},
   journal = {GitHub repository},
   howpublished = {\url{https://github.com/github/open-source-survey}}
-}
+```
 
 
