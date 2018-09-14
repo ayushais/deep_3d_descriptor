@@ -1,5 +1,8 @@
 # Deep 3D Descriptor
 
+### Authors: [Ayush Dewan](http://www2.informatik.uni-freiburg.de/~caselitz/) and [Tim Caselitz](http://www2.informatik.uni-freiburg.de/~caselitz/)
+
+
 Code for the paper "Learning a Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
