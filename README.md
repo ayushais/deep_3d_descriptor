@@ -95,7 +95,9 @@ We recommend installing TensorFlow in a virtual environment
 
 * [OpenCV] (https://github.com/opencv/opencv)
 * [Thrift] (https://thrift.apache.org/download) 
-For both C++ and Python
+
+
+Thrift is required for both C++ and Python
 
 ### 2.2 Installing
 
