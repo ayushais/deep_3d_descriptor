@@ -7,6 +7,12 @@ Code for the paper "Learning a Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
+### Publication
+
+Ayush Dewan, Tim Caselitz and Wolfram Burgard. **Learning a Local Feature Descriptor for 3D LiDAR Scans**. 
+*IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018.*
+
+
 
 ## 1. Training the Network 
 ### 1.1 Prerequisites
