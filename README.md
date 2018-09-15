@@ -15,7 +15,8 @@ Ayush Dewan, Tim Caselitz and Wolfram Burgard. **Learning a Local Feature Descri
 
 ## 1. License
 
-deep_3d_descriptor is released under GPLv3 license. If you use deep_3d_descriptor in an academic work, please citr:
+deep_3d_descriptor is released under GPLv3 license.  
+If you use deep_3d_descriptor in an academic work, please cite:
 
 ```
 @inproceedings{dewan2018iros,
