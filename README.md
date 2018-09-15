@@ -7,21 +7,35 @@ Code for the paper "Learning a Local Feature Descriptors for 3D LiDAR Scans".
 This package provides the code for training a model for learning and matching
 the feature descriptors. We also provide a C++ library for using the learned feature descriptor with PCL. 
 
-### Publication
+### Related Publication
 
 Ayush Dewan, Tim Caselitz and Wolfram Burgard. **Learning a Local Feature Descriptor for 3D LiDAR Scans**.  
 *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018.*
 
 
+## 1. License
 
-## 1. Training the Network 
-### 1.1 Prerequisites
+deep_3d_descriptor is released under GPLv3 license. If you use deep_3d_descriptor in an academic work, please citr:
 
-*  Tensorflow 1.2.1
+```
+@inproceedings{dewan2018iros,
+  author = {Ayush Dewan and  Tim Caselitz and Wolfram Burgard},
+  title = {Learning a Local Feature Descriptor for 3D LiDAR Scans},
+  booktitle = {Proc.~of the IEEE International Conference on Intelligent Robots and Systems (IROS)},
+  year = 2018,
+  url = {http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf}
+}
+```
+
+
+## 2. Training the Network 
+### 2.1. Prerequisites
+
+*  Tensorflow 
 *  Pyhton 2.7
 *  H5py
 
-### 1.2. Dataset
+### 2.2. Dataset
 ```
 ./download_dataset.sh
 
@@ -32,7 +46,7 @@ channel corresponds to the LiDAR intensity value. For every example there is a l
 to the same keypoint have same label. These labels are not used directly for training but only to identify examples
 belonging to same keypoint. 
 
-### 1.3. Training the model
+### 2.3. Training the model
 All the files required for training and testing the model is in python_scripts folder. To train the model following
 script has to be executed. 
 
@@ -59,7 +73,7 @@ Then retrain the network with learning rate set to 0.00001 and weights initializ
 last saved model from the first training. The path to the trained model can be set using the paramter 
 --fine_tune_model_name. 
 
-#### 1.3.1. Example commands for completing the above mentioned training procedure:
+#### 2.3.1. Example commands for completing the above mentioned training procedure:
 
 ```
 python train_model.py --model_name  my_model --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5
@@ -70,7 +84,7 @@ learned_models/my_model_110062
 ```
 
 
-### 1.4. Testing the model
+### 2.4. Testing the model
 To test the model we provide the code for calculating the FPR-95 error. The model is tested
 on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve
 between TPR and FPR and stores the data used for plotting the curve.
@@ -84,7 +98,7 @@ Parameters
 
 ```
 
-#### 1.4.1. Example command for testing a trained model
+#### 2.4.1. Example command for testing a trained model
 ```
 python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031  --path_to_testing_data ../dataset/testing_data.hdf5
 
@@ -92,9 +106,9 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 
 
-## 2. C++ API
+## 3. C++ API
 
-### 2.1 Prerequisites
+### 3.1. Prerequisites
 
 * Tensorflow   
 
@@ -108,7 +122,7 @@ We recommend installing TensorFlow in a virtual environment
 
 Thrift is required for both C++ and Python
 
-### 2.2 Installing
+### 3.2. Installing
 
 In the project directory
 
@@ -124,7 +138,7 @@ In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL 
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
 
-### 2.3. Downloading the test pointcloud
+### 3.3. Downloading the test pointcloud
 
 ```
 ./download_test_pcd.sh
@@ -134,7 +148,7 @@ The name format for the files is seq_scan_trackID_object.pcd.
  'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given
 sequence. 'trackID' is the object ID provided by the benchmark. For instance '0011_126_14_object.pcd' and 
 '0011_127_14_object.pcd' are the same objects in two consecutive scans.
-### 2.4. Downloading the models
+### 3.4. Downloading the models
 
 ```
 ./download_models.sh
@@ -146,7 +160,7 @@ a metric for matching the descriptors and a feature descriptor learned using hin
 
 
 
-### 2.5. Using the learned descriptor with PCL
+### 3.5. Using the learned descriptor with PCL
 
 We provide a service and client API for using the learned feature descriptor with PCL.
 
@@ -191,7 +205,7 @@ Parameters
 --use_ransac
 
 ```
-#### 2.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
+#### 3.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
 
 In the Tensorflow environment. python_server.py is in the python_cpp folder
 
@@ -205,7 +219,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 
 ```
 
-#### 2.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
+#### 3.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
  
 ```
 python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
@@ -215,16 +229,6 @@ python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckp
 ```
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 0 --use_ransac 0
 
-```
-If you use our dataset or the code, please cite the following paper
-```
-@inproceedings{dewan2018iros,
-  author = {Ayush Dewan and  Tim Caselitz and Wolfram Burgard},
-  title = {Learning a Local Feature Descriptor for 3D LiDAR Scans},
-  booktitle = {Proc.~of the IEEE Int.~Conf.~on Intelligent Robots and Systems (IROS)},
-  year = 2018,
-  url = {http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf}
-}
 ```
 
 
