@@ -1,12 +1,24 @@
+/*
+ * This file is part of the deep_3d_descriptor (https://github.com/xxxx or http://xxx.github.io).
+ * Copyright (c) 2018 Ayush Dewan <dewan@informatik.uni-freiburg.de> (University of Freiburg)
+ *
+ * deep_3d_descriptor is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with deep_3D_descriptor. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "deep_3d_descriptor/deep_3d_descriptor.h"
 
 int main(int argc,char **argv)
 {
-/*  if(argc < 6)*/
-  //{
-    //std::cerr << "The input is path to the pointcloud, the neighbourhood radius  and sampling radius" << std::endl;
-    //return(1);
-  /*}*/
 
   boost::filesystem::path input_path;
   float neighbourhood_radius;
@@ -74,14 +86,14 @@ int main(int argc,char **argv)
   uniform_sampling.setRadiusSearch(sampling_radius);
   uniform_sampling.filter(*cloud_filter);
   std::cout << "number of keypoins: " << cloud_filter->points.size() << std::endl;
-  Deep3DDescriptor deep_feature;
+  Deep3DDescriptor estimate_deep_descriptor;
 ///computing feature descriptors
-  deep_feature.setInputCloud(input_cloud);
-  deep_feature.setKeypoints(cloud_filter);
-  deep_feature.setRadius(neighbourhood_radius);
-  FeatureCloud deep_features;
-  deep_feature.compute(deep_features);
-  std::cout << "total number of features computed are: " << deep_features.points.size() << std::endl;
+  estimate_deep_descriptor.setInputCloud(input_cloud);
+  estimate_deep_descriptor.setKeypoints(cloud_filter);
+  estimate_deep_descriptor.setRadius(neighbourhood_radius);
+  DescriptorCloud deep_descriptors;
+  estimate_deep_descriptor.compute(deep_descriptors);
+  std::cout << "total number of features computed are: " << deep_descriptors.points.size() << std::endl;
 
 
 }

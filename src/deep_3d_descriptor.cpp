@@ -12,7 +12,7 @@ void Deep3DDescriptor::setInputCloud(const IntensityCloud::Ptr &cloud_input) {cl
 void Deep3DDescriptor::setRadius(const float nb_radius_input) {nb_radius_ = nb_radius_input;}
 void Deep3DDescriptor::setKeypoints(const IntensityCloud::Ptr &keypoints_input) {keypoints_ = keypoints_input;}
 IntensityCloud Deep3DDescriptor::getSelectedKeypoints(){return (*selected_keypoints_);}
-void Deep3DDescriptor::get_image_patch(std::vector<cv::Mat>&image_patches_vector)
+void Deep3DDescriptor::getImagePatch(std::vector<cv::Mat>&image_patches_vector)
 {
   std::vector<cv::Mat>vecD_initial;
   vecD_initial.resize(keypoints_->points.size());
@@ -198,7 +198,7 @@ void Deep3DDescriptor::get_image_patch(std::vector<cv::Mat>&image_patches_vector
 
 }
 
-void Deep3DDescriptor::compute(FeatureCloud &features)
+void Deep3DDescriptor::compute(DescriptorCloud &features)
 {
 
 
@@ -210,7 +210,7 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
 
   selected_keypoints_->points.clear();
   std::vector<cv::Mat>keypoint_image_patches;
-  get_image_patch(keypoint_image_patches);
+  getImagePatch(keypoint_image_patches);
   std::cout << "surface patches computed" << std::endl;
   std::cout << "out of " << keypoints_->points.size()
     << " keypoints, patches computed for " << selected_keypoints_->points.size() << " keypoints" << std::endl;
@@ -241,9 +241,9 @@ void Deep3DDescriptor::compute(FeatureCloud &features)
 
   for(size_t i = 0; i < selected_keypoints_->points.size() ; ++i)
   {
-    DeepFeature256 deep_feature;
+    DeepDescriptor256 deep_descriptor;
     int start_index = i * 256;
-    std::copy(feature_vector.begin() + start_index,feature_vector.begin() + start_index + 256,deep_feature.descriptor);
-    features.points.push_back(deep_feature);
+    std::copy(feature_vector.begin() + start_index,feature_vector.begin() + start_index + 256,deep_descriptor.descriptor);
+    features.points.push_back(deep_descriptor);
   }
  }
