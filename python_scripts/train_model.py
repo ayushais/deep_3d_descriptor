@@ -38,7 +38,6 @@ class Siamese:
 ### load the file listing positive combinations      
     self.negative_combination = np.loadtxt('negative_combination_training.txt',delimiter=",")
     random.shuffle(self.negative_combination)
-      ###load the training hdf5 file (need to get rid of the hardcoded path)
     hdf5_file = h5py.File(training_file_path,  "r")  
     a_group_key_data = hdf5_file.keys()[0]
     data_d = list(hdf5_file[a_group_key_data])
@@ -56,7 +55,6 @@ class Siamese:
     self.iter_per_epochs = self.negative_combination.shape[0]/self.batch_size
      
 
-###load the testing hdf5 file (need to get rid of the hardcoded path)
     self.positive_combination_test = np.loadtxt('positive_combination_testing.txt',delimiter=",")
     random.shuffle(self.positive_combination_test)
     self.negative_combination_test = np.loadtxt('negative_combination_testing.txt',delimiter=",")
@@ -409,7 +407,7 @@ def main():
     _,loss = sess.run([siamese_object.train_step,siamese_object.loss_value],feed_dict=feed_dict)
     if(num_iteration % 1000 == 0):
       #minibatch_accuracy = accuracy(predictions, label)
-      print("loss_value %f,%d" % (loss,num_iteration))
+      print("training loss_value %f,%d" % (loss,num_iteration))
       #accuracy_train.append(minibatch_accuracy)
       loss_val_train.append(loss)
       image_left_test,image_right_test,label_test = siamese_object.load_test_batch(100)
@@ -427,7 +425,6 @@ def main():
       test_accuracy = accuracy(test_predictions, label_test)
       accuracy_test.append(test_accuracy)
       print("test loss_value %f,%d" % (l,num_iteration))
-      print('test accuracy: %.1f%%' % test_accuracy)
       
     if(num_iteration % model_iteration == 0 and num_iteration > 0):
       filename_save = path_to_store_models + model_name + '_' + str(num_iteration) + '.ckpt'
