@@ -197,7 +197,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ```
 Matched Correspondences             |Aligned Scans
 :-------------------------:|:-------------------------:
-![](http://deep3d-descriptor.informatik.uni-freiburg.de/corr_metric.png)  |  ![](http://deep3d-descriptor.informatik.uni-freiburg.de/corr_hinge.png)
+![](http://deep3d-descriptor.informatik.uni-freiburg.de/corr_metric.png)  |  ![](http://deep3d-descriptor.informatik.uni-freiburg.de/aligned_metric.png)
 
 #### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
 
