@@ -4,12 +4,9 @@ This repository contains code to learn and apply a local feature descriptor for 
 
 #### Related Publication
 
-Ayush Dewan, Tim Caselitz, Wolfram Burgard
-
-**Learning a Local Feature Descriptor for 3D LiDAR Scans**
-
-*IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018*
-
+Ayush Dewan, Tim Caselitz, Wolfram Burgard  
+**Learning a Local Feature Descriptor for 3D LiDAR Scans**  
+*IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018*  
 **[PDF](http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf)**
 
 ## 1. License
@@ -71,7 +68,9 @@ We recommend the following training procedure. Train the network with the defaul
 
 ```
 python train_model.py --model_name  my_model --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5
+```
 
+```
 python train_model.py --model_name  my_model_retrain --path_to_training_data ../dataset/training_data.hdf5  --path_to_testing_data  ../dataset/testing_data.hdf5 --learning_rate 0.00001 --fine_tune_model_name learned_models/my_model_110062
 
 ```
