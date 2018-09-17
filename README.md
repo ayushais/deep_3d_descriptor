@@ -195,8 +195,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
 
 ```
-Inline-style: 
-![alt text](http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png "Logo Title Text 1")
+![](http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png|width=100)
 
 
 #### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
