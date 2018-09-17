@@ -1,18 +1,20 @@
 /*
- * This file is part of the deep_3d_descriptor (https://github.com/xxxx or http://xxx.github.io).
- * Copyright (c) 2018 Ayush Dewan <dewan@informatik.uni-freiburg.de> (University of Freiburg)
+ * This file is part of deep_3d_descriptor.
+ *
+ * Copyright (C) 2018 Ayush Dewan (University of Freiburg)
  *
  * deep_3d_descriptor is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, version 3.
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
+ * deep_3d_descriptor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with deep_3D_descriptor. If not, see <http://www.gnu.org/licenses/>.
+ * along with deep_3d_descriptor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include "deep_3d_descriptor/deep_3d_descriptor.h"
