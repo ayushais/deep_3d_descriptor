@@ -197,10 +197,10 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ```
  <div class="row">
   <div class="column">
-    <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" alt="Snow" style="width:50%">
+    <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" width="400">
   </div>
   <div class="column">
-    <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" alt="Forest" style="width:50%">
+    <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" width="400">
   </div>
  </div> 
 
