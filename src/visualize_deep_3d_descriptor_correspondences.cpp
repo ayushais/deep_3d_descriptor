@@ -321,5 +321,5 @@ int main(int argc, char **argv) {
     boost::this_thread::sleep(boost::posix_time::microseconds(100000));
   }
 
-  viewer_alignment->saveScreenshot("/home/dewan/code/deep_3d_descriptor/aligned_metric.png");
+  viewer_alignment->saveScreenshot("/home/dewan/code/deep_3d_descriptor/aligned_hinge.png");
 }
