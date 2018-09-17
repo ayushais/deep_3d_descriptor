@@ -5,9 +5,8 @@ This repository contains code to learn and apply a local feature descriptor for 
 #### Related Publication
 
 Ayush Dewan, Tim Caselitz, Wolfram Burgard  
-**Learning a Local Feature Descriptor for 3D LiDAR Scans**  
+**[Learning a Local Feature Descriptor for 3D LiDAR Scans]**(http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf)  
 *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018*  
-**[PDF](http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf)**
 
 ## 1. License
 
