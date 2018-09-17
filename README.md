@@ -1,6 +1,6 @@
 # Deep 3D Descriptor
 
-This repository contains code to learn and apply a local feature descriptor for 3D LiDAR scans. We provide the scripts to train the model and a C++ library to interface the learned decriptor with PCL. Training data to learn the model as well as trained models can be downloaded from [our website](http://deep3d-descriptor.informatik.uni-freiburg.de).
+This repository contains code to learn and apply a local feature descriptor for 3D LiDAR scans. We provide the scripts to train the model and a C++ library to interface the learned decriptor with PCL. Training data to learn the model as well as trained models are available.
 
 #### Related Publication
 
@@ -195,6 +195,9 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
 
 ```
+Inline-style: 
+![alt text](http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png "Logo Title Text 1")
+
 
 #### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
 

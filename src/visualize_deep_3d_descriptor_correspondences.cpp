@@ -227,6 +227,7 @@ int main(int argc, char **argv) {
   viewer_correspondence->setPointCloudRenderingProperties(
       pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
   viewer_correspondence->setBackgroundColor(255, 255, 255);
+
   pcl::registration::TransformationEstimationSVD<pcl::PointXYZI, pcl::PointXYZI,
                                                  float>
       svd;
@@ -270,32 +271,52 @@ int main(int argc, char **argv) {
                                     selected_keypoints_target, *correspondences,
                                     transformation);
   }
+  pcl::visualization::Camera cam;
+  cam.fovy = 0.53;
+  cam.clip[0] = 3.22;
+  cam.clip[1] = 9.31;
+  cam.window_size[0] = 1560;
+  cam.window_size[1] = 960;
+  cam.window_pos[0] = 65;
+  cam.window_pos[1] = 52;
+  cam.focal[0] = 6.10;
+  cam.focal[1] = -4.68;
+  cam.focal[2] = 1.97;
+  cam.pos[0] = 5.19;
+  cam.pos[1] = -5.11;
+  cam.pos[2] =  4.94;
+  cam.view[0] = 0.693;
+  cam.view[1] = 0.65;
+  cam.view[2] = 0.30;
+  viewer_correspondence->setCameraParameters(cam);
 
+  viewer_correspondence->saveScreenshot("/home/dewan/code/deep_3d_descriptor/corr_metric.png");
   std::cout << "Estimated Transformation " << std::endl;
   std::cout << transformation << std::endl;
   IntensityCloud::Ptr cloud_aligned(new IntensityCloud);
   pcl::transformPointCloud<pcl::PointXYZI>(*input_cloud_source, *cloud_aligned,
                                            transformation);
-  boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_alignment(
-      new pcl::visualization::PCLVisualizer("Alignment"));
+/*  boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer_alignment(*/
+      //new pcl::visualization::PCLVisualizer("Alignment"));
 
-  pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint>
-      purple_aligned(cloud_aligned, 51, 0, 102);
-  viewer_alignment->addPointCloud<IntensityPoint>(cloud_aligned, purple_aligned,
-                                                  "cloud_aligned");
-  viewer_alignment->addPointCloud<IntensityPoint>(input_cloud_target, green,
-                                                  "input_cloud_target");
-  viewer_alignment->setPointCloudRenderingProperties(
-      pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "cloud_aligned");
-  viewer_alignment->setPointCloudRenderingProperties(
-      pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
-  viewer_alignment->setBackgroundColor(255, 255, 255);
+  //pcl::visualization::PointCloudColorHandlerCustom<IntensityPoint>
+      //purple_aligned(cloud_aligned, 51, 0, 102);
+  //viewer_alignment->addPointCloud<IntensityPoint>(cloud_aligned, purple_aligned,
+                                                  //"cloud_aligned");
+  //viewer_alignment->addPointCloud<IntensityPoint>(input_cloud_target, green,
+                                                  //"input_cloud_target");
+  //viewer_alignment->setPointCloudRenderingProperties(
+      //pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "cloud_aligned");
+  //viewer_alignment->setPointCloudRenderingProperties(
+      //pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "input_cloud_target");
+  //viewer_alignment->setBackgroundColor(255, 255, 255);
 
-  while (!viewer_correspondence->wasStopped() ||
-         !viewer_alignment->wasStopped()) {
+  while (!viewer_correspondence->wasStopped() /*||*/
+         /*!viewer_alignment->wasStopped()*/) {
     viewer_correspondence->spinOnce(100);
     boost::this_thread::sleep(boost::posix_time::microseconds(100000));
-    viewer_alignment->spinOnce(100);
-    boost::this_thread::sleep(boost::posix_time::microseconds(100000));
+  /*  viewer_alignment->spinOnce(100);*/
+    /*boost::this_thread::sleep(boost::posix_time::microseconds(100000));*/
   }
+
 }
