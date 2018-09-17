@@ -1,12 +1,15 @@
 # Deep 3D Descriptor
 
-This repository contains code to learn and apply a local feature descriptor for 3D LiDAR scans. We provide the scripts to train the model and a C++ library to interface the learned decriptor with PCL. Training data to learn the model as well as trained models can be downloaded from our website.
+This repository contains code to learn and apply a local feature descriptor for 3D LiDAR scans. We provide the scripts to train the model and a C++ library to interface the learned decriptor with PCL. Training data to learn the model as well as trained models can be downloaded from [our website](http://deep3d-descriptor.informatik.uni-freiburg.de).
 
 #### Related Publication
 
 Ayush Dewan, Tim Caselitz, Wolfram Burgard
+
 **Learning a Local Feature Descriptor for 3D LiDAR Scans**
+
 *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Madrid, Spain, 2018*
+
 **[PDF](http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf)**
 
 ## 1. License
