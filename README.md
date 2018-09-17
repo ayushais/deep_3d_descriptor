@@ -195,9 +195,12 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 ./visualize_deep_3d_descriptor_correspondences --path_to_source_pcd_file ../test_pcd/0011_1_2_object.pcd --sampling_radius_source 0.2 --path_to_target_pcd_file ../test_pcd/0011_2_2_object.pcd --sampling_radius_target 0.1 --feature_neighborhood_radius 1.6 --use_learned_metric 1 --use_ransac 0
 
 ```
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![](http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png)  |  ![](http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png)
  <div class="row">
   <div class="column">
-    <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" width="200">
+    <img src= width="200">
   </div>
   <div class="column">
     <img src="http://deep3d-descriptor.informatik.uni-freiburg.de/covergirl_new.png" width="200">
