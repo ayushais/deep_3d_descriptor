@@ -113,8 +113,6 @@ python test_model.py --path_to_saved_model learned_models/my_model_retrain_55031
 
 * Tensorflow   
 
-We recommend installing TensorFlow in a virtual environment
-
 * [PCL 1.8] (https://github.com/PointCloudLibrary/pcl)
 
 * [OpenCV] (https://github.com/opencv/opencv)
@@ -220,7 +218,7 @@ python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt 
 
 ```
 
-#### 3.5.2 Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
+#### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
  
 ```
 python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
