@@ -61,7 +61,7 @@ Parameters
 
 ```
 
-We recommend the following training procedure. Train the network with the default parameters. Then retrain the network with learning rate set to 0.00001 and weights initialized using the  last saved model from the first training. The path to the trained model can be set using the paramter --fine_tune_model_name.
+We recommend the following training procedure. Train the network with the default parameters. Then retrain the network with learning rate set to 0.00001 and weights initialized using the last saved model from the first training. The path to the trained model can be set using the paramter --fine_tune_model_name.
 
 #### 2.3.1. Example commands for completing the above mentioned training procedure:
 
@@ -75,7 +75,7 @@ python train_model.py --model_name  my_model_retrain --path_to_training_data ../
 ```
 
 ### 2.4. Testing the model
-To test the model we provide the code for calculating the FPR-95 error. The model is tested on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plot the curve between TPR and FPR and stores the data used for plotting the curve.
+To test the model we provide the code for calculating the FPR-95 error. The model is tested on 50,000 positive and negative image patches from the testing data. This script prints the FPR-95 error, plots the curve between TPR and FPR, and stores the data used for plotting the curve.
 
 ```
 python test_model.py
@@ -115,7 +115,7 @@ cmake ..
 make
 ```
 
-In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL installation
+In case PCL 1.8 is not found, use -DPCL_DIR variable to specify the path of PCL installation.
 ```
 cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ```
@@ -126,7 +126,7 @@ cmake .. -DPCL_DIR:STRING=PATH_TO_PCLConfig.cmake
 ./download_test_pcd.sh
 ```
 
-This will download the test pointcloud files used in alignment experiment in the paper. The name format for the files is seq_scan_trackID_object.pcd. 'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given sequence. 'trackID' is the object ID provided by the benchmark. For instance '0011_126_14_object.pcd' and '0011_127_14_object.pcd' are the same objects in two consecutive scans.
+This will download the test pointcloud files used in the alignment experiment in the paper. The name format for the files is seq_scan_trackID_object.pcd. 'seq' corresponds to the sequence number from KITTI tracking benchmark. 'scan' is the scan used from the given sequence. 'trackID' is the object ID provided by the benchmark. For instance, '0011_126_14_object.pcd' and '0011_127_14_object.pcd' is the same object in two consecutive scans.
 
 ### 3.4. Downloading the models
 
@@ -134,7 +134,7 @@ This will download the test pointcloud files used in alignment experiment in the
 ./download_models.sh
 ```
 
-This will download the trained model files. We provide model for a feature descriptor learned simulataneously with a metric for matching the descriptors and a feature descriptor learned using hinge loss. 'deep_3d_descriptor_matching' contains the learned weights for the descriptor and the metric. 'deep_3d_descriptor_hinge_loss' is the learned model for the descriptor trained using hinge loss.
+This will download the trained model files. We provide the model for a feature descriptor learned simulataneously with a metric for matching as well as a feature descriptor learned using hinge loss. 'deep_3d_descriptor_matching' is the model for the descriptor using the learned metric, 'deep_3d_descriptor_hinge_loss' for the descriptor trained using hinge loss.
 
 ### 3.5. Using the learned descriptor with PCL
 
@@ -142,7 +142,7 @@ We provide a service and client API for using the learned feature descriptor wit
 
 All the Thrift related code and the python service file is in the folder python_cpp.
 
-The service has to be started within the tensorflow environment
+The service has to be started within the tensorflow environment.
 ```
 python python_server.py
 
@@ -166,7 +166,7 @@ Parameters
 
 ```
 
-For visualizing the correspondences between the descriptors and aligning the poinclouds using estimated correspondences. For aligning the pointclouds, we provide an option of using RANSAC. If RANSAC option is enabled, then the correspondences shown are from the inlier set estimated by RANSAC. 
+For visualizing the correspondences and using them to align the pointclouds (--use_ransac for inlier correspondences only)
 
 ```
 ./visualize_deep_3d_feature_correspondences
@@ -182,9 +182,9 @@ Parameters
 
 ```
 
-#### 3.5.1. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using the metric learned by the network
+#### 3.5.1. Examples for visualizing the correspondences and the aligned pointcloud 
 
-In the Tensorflow environment. python_server.py is in the python_cpp folder
+##### 3.5.1.1. Estimate the correspondences using the learned metric
 
 ```
 python python_server.py --model_name ../models/deep_3d_descriptor_matching --use_hinge_loss 0
@@ -199,7 +199,7 @@ Matched Keypoints             |Aligned Scans
 :-------------------------:|:-------------------------:
 ![](http://deep3d-descriptor.informatik.uni-freiburg.de/corr_metric.png)  |  ![](http://deep3d-descriptor.informatik.uni-freiburg.de/aligned_metric.png)
 
-#### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
+##### 3.5.1.2. Estimate the correspondences using Euclidean distance
 
 ```
 python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss --use_hinge_loss 1
