@@ -38,15 +38,16 @@ int main(int argc, char **argv) {
                                               "--feature_neighborhood_radius") +
                   1]);
   } else {
-    std::cerr << "neighbourhood radius not given" << std::endl;
-    return (1);
+
+    neighbourhood_radius = 1.6;
+    std::cerr << "neighbourhood set to default value 1.6" << std::endl;
   }
   if (pcl::console::find_argument(argc, argv, "--sampling_radius") >= 0) {
     sampling_radius = atof(
         argv[pcl::console::find_argument(argc, argv, "--sampling_radius") + 1]);
   } else {
-    std::cerr << "sampling radius not given" << std::endl;
-    return (1);
+    sampling_radius = 0.4;
+    std::cerr << "sampling radius set to default value 0.4" << std::endl;
   }
 
   std::string pointcloud_path = input_path.string();
