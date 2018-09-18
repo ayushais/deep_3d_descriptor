@@ -187,7 +187,7 @@ Parameters
 In the Tensorflow environment. python_server.py is in the python_cpp folder
 
 ```
-python python_server.py --model_name ../models/deep_3d_descriptor_matching.ckpt --use_hinge_loss 0
+python python_server.py --model_name ../models/deep_3d_descriptor_matching --use_hinge_loss 0
 
 ```
 
@@ -202,7 +202,7 @@ Matched Keypoints             |Aligned Scans
 #### 3.5.2. Example for visualizing the estimated feature correspondences and the aligned pointcloud. The correspondences are estimated using Euclidean distance
 
 ```
-python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss.ckpt --use_hinge_loss 1
+python python_server.py --model_name ../models/deep_3d_descriptor_hinge_loss --use_hinge_loss 1
 
 ```
 

@@ -91,9 +91,9 @@ class GetDescriptorsHandler:
   def __init__(self,model,is_hinge_loss):
     self.log = {}
     self.session = tf.Session()
-    model_graph = model + '.meta'
+    model_graph = model + '.ckpt.meta'
     new_saver = tf.train.import_meta_graph(model_graph)
-    new_saver.restore(self.session,model)
+    new_saver.restore(self.session,model+'.ckpt')
     self.graph = tf.get_default_graph()
     self.patch_size = 64
     self.feature_size = 256
@@ -138,7 +138,6 @@ class GetDescriptorsHandler:
           patch_size],[self.patch_size,self.patch_size])
 
     print("end with patches")
-    # input_patches = input_patches[:,:,:,
     input_x1 = self.graph.get_tensor_by_name("input_x1:0")
     keep_prob = self.graph.get_tensor_by_name("keep_prob:0")
     is_training = self.graph.get_tensor_by_name("is_training:0")
