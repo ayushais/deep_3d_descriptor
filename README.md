@@ -162,7 +162,7 @@ For computing feature descriptor
 Parameters
 --path_to_pcd_file
 --feature_neighborhood_radius
---sampling_radius_for_keypoints
+--sampling_radius
 
 ```
 

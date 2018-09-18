@@ -20,7 +20,6 @@ from __future__ import division
 from __future__ import print_function
 import sys
 sys.path.append('gen-py')
-sys.path.append('../external/thrift-0.11.0/lib/python2.7/site-packages')
 from python_cpp import get_descriptors
 from python_cpp.ttypes import *
 from thrift.transport import TSocket
@@ -46,7 +45,7 @@ class InferenceNet:
     self.graph = []
     self.bneck_1 = tf.placeholder(tf.float32, shape=[None,bneck_size],name="bneck_1")
     self.bneck_2 = tf.placeholder(tf.float32, shape=[None,bneck_size],name="bneck_2")
-    self.fc_size = 4096
+    self.fc_size = 1024
     self.graph = graph
     self.fc3 = self.metric_model(self.bneck_1,self.bneck_2)  
 
