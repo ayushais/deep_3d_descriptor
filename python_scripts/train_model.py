@@ -212,11 +212,6 @@ class Siamese:
     dense_block,features,db_output = self.add_block("dense_block_2", transition,2,features,self.growth)
     transition = self.avg_pool(dense_block,2)
     conv_2 = self.conv_layer(transition,4,1,1,1,1,'SAME',"conv_2")
-#      transition = self.add_transition("transition_3", dense_block, features, features)
-#      transition = tf.reshape(transition,(tf.shape(transition)[0],int(transition.shape[1]) * int(transition.shape[2]) * int(transition.shape[3])))
-#      bottleneck = tf.contrib.layers.fully_connected(transition,256,scope="bottleneck")
-#        bottleneck = self.fc_layer(transition,256,"bottleneck")
-#         print(self.fc.shape)
     input_shape = conv_2.shape.as_list()
     input_shape_flattened = functools.reduce(operator.mul,input_shape[1:len(input_shape)], 1)
     bottleneck = tf.reshape(conv_2,[tf.shape(conv_2)[0],input_shape_flattened],name="bottleneck")
@@ -424,9 +419,7 @@ def main():
     feed_dict = {siamese_object.x1:image_left,siamese_object.x2:image_right,siamese_object.tf_train_labels:label,siamese_object.keep_prob:1.0,siamese_object.is_training:True}
     _,loss = sess.run([siamese_object.train_step,siamese_object.loss_value],feed_dict=feed_dict)
     if(num_iteration % 1000 == 0):
-      #minibatch_accuracy = accuracy(predictions, label)
       print("training loss_value %f,%d" % (loss,num_iteration))
-      #accuracy_train.append(minibatch_accuracy)
       loss_val_train.append(loss)
       image_left_test,image_right_test,label_test = siamese_object.load_test_batch(100)
       feed_dict = {siamese_object.x1:image_left_test,siamese_object.keep_prob:1.0,siamese_object.is_training:False}

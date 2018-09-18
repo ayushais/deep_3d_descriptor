@@ -178,12 +178,10 @@ void Deep3DDescriptor::getImagePatch(
     vecD_initial[p] = image_patch;
     cloud_box.points.clear();
   }
-  size_t count_zeros{0};
   size_t ctr{0};
   for (auto &image_patch : vecD_initial) {
     if (image_patch.rows == 0)  /// the keypoint didn't have a patch
     {
-      count_zeros += 1;
       ctr += 1;
       continue;
     }
@@ -233,21 +231,21 @@ void Deep3DDescriptor::compute(DescriptorCloud &features) {
     for (size_t channel = 0; channel < 2; ++channel) {
       std::copy(split_image_patch[channel].begin<double>(),
                 split_image_patch[channel].end<double>(),
-                patch_vector.begin() + (ctr * 64 * 64));
+                patch_vector.begin() + (ctr * kPatchSize * kPatchSize));
       ctr += 1;
     }
   }
 
-  std::vector<double> feature_vector(selected_keypoints_->points.size() * 256);
+  std::vector<double> feature_vector(selected_keypoints_->points.size() * kDescriptorSize);
   client.return_descriptors(feature_vector, patch_vector);
   transport->close();
   std::cout << "feature estimated" << std::endl;
 
   for (size_t i = 0; i < selected_keypoints_->points.size(); ++i) {
     DeepDescriptor256 deep_descriptor;
-    int start_index = i * 256;
+    int start_index = i * kDescriptorSize;
     std::copy(feature_vector.begin() + start_index,
-              feature_vector.begin() + start_index + 256,
+              feature_vector.begin() + start_index + kDescriptorSize,
               deep_descriptor.descriptor);
     features.points.push_back(deep_descriptor);
   }

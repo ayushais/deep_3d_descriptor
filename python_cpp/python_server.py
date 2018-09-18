@@ -180,7 +180,6 @@ def main():
     is_hinge_loss = args.use_hinge_loss
 
 
- #  script,model,is_hinge_loss = argv
   handler = GetDescriptorsHandler(model,is_hinge_loss)
   processor = get_descriptors.Processor(handler)
   transport = TSocket.TServerSocket('localhost',9090)
@@ -189,9 +188,7 @@ def main():
   import logging
   logging.basicConfig(level=logging.DEBUG)
   server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
-  # print "Starting python server..."
   server.serve()
-##  print "done!"
 
 if __name__ == '__main__':
   main()

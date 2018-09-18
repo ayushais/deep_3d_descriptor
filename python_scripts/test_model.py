@@ -178,7 +178,6 @@ def main():
     TP_vec = np.reshape(TP_vec,[TP_vec.shape[0],1])
     FP_vec = np.reshape(FP_vec,[FP_vec.shape[0],1])
     min_list = abs(TP_vec - 0.95)## for finding the index closest to TPR at 95%
-##    print(min(enumerate(min_list), key=itemgetter(1))[0])
     results = np.concatenate((TP_vec,FP_vec),axis = 1)
 ####storing TPR and FPR for plotting the curve
     print('fpr_score %f'%FP_vec[min(enumerate(min_list), key=itemgetter(1))[0]])
