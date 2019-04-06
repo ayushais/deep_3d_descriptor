@@ -26,20 +26,22 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
+
 import operator
 import functools
 import argparse
+
 import sys
-from sys import argv
 import random
+
 import numpy as np
 import numpy.matlib
-import cv2
-import tensorflow as tf
+
 from sys import argv
 import multiprocessing
 import time
 import socket
+import tensorflow as tf
 class InferenceNet:
   def __init__ (self,bneck_size,graph):
     self.graph = []
@@ -160,7 +162,7 @@ class GetDescriptorsHandler:
       normalize_subtract[:,:,:,0] = 4.15
       normalize_subtract[:,:,:,1] = 7.55
       input_patches_batch = np.subtract(input_patches_batch,normalize_subtract)
-      feed_dict = {input_x1:input_patches_batch,keep_prob: 1.0,is_training:True}
+      feed_dict = {input_x1:input_patches_batch,keep_prob: 1.0,is_training:False}
 
       feature_1 = self.session.run(bottleneck,feed_dict=feed_dict)
       feature[index_patch:index_patch + step,:] = feature_1

@@ -23,14 +23,12 @@ import operator
 import functools
 import argparse
 import sys
-from sys import argv
 import h5py
 import numpy as np
 import random
 import time
-import cv2
-from scipy import sparse
-import matplotlib.pyplot as plt
+# from scipy import sparse
+# import matplotlib.pyplot as plt
 import tensorflow as tf
 from sys import argv
 
@@ -57,11 +55,11 @@ class Siamese:
     self.negative_combination = np.loadtxt('negative_combination_training.txt',delimiter=",")
     random.shuffle(self.negative_combination)
     hdf5_file = h5py.File(training_file_path,  "r")  
-    a_group_key_data = hdf5_file.keys()[0]
+    a_group_key_data = list(hdf5_file.keys())[0]
     data_d = list(hdf5_file[a_group_key_data])
     self.train_data = np.array(data_d)
     self.train_data = np.transpose(self.train_data,(0,2,3,1))
-    a_group_key_label = hdf5_file.keys()[1]
+    a_group_key_label = list(hdf5_file.keys())[1]
     data_l = list(hdf5_file[a_group_key_label])
     self.train_label_data = np.array(data_l)
     hdf5_file.close()
@@ -78,11 +76,11 @@ class Siamese:
     self.negative_combination_test = np.loadtxt('negative_combination_testing.txt',delimiter=",")
     random.shuffle(self.negative_combination_test)
     hdf5_file = h5py.File(test_file_path,  "r")  
-    a_group_key_data = hdf5_file.keys()[0]
+    a_group_key_data = list(hdf5_file.keys())[0]
     data_d_test = list(hdf5_file[a_group_key_data])
     self.test_data = np.array(data_d_test)
     self.test_data = np.transpose(self.test_data,(0,2,3,1))
-    a_group_key_label = hdf5_file.keys()[1]
+    a_group_key_label = list(hdf5_file.keys())[1]
     data_l_test = list(hdf5_file[a_group_key_label])
     self.test_label_data = np.array(data_l_test)
     
@@ -164,8 +162,9 @@ class Siamese:
     db_output = []
     db_output = np.array(db_output)
     with tf.variable_scope(scope_name) as scope:
-      for idx in xrange(num_layers):
-        current_layer = self.add_layer(stack, features, growth, scope_name+ `idx` + 'W')
+      for idx in range(num_layers):
+        current_layer = self.add_layer(stack, features, growth, scope_name +
+            str(idx) + 'W')
         if(db_output.shape[0] == 0):
           db_output = current_layer
         else:  
@@ -224,11 +223,12 @@ class Siamese:
   def load_test_batch(self,batch_size):
 
 ##pick some random positive sample        
-    positive_sample = random.sample(self.positive_combination_test,batch_size)
+    positive_sample = random.sample(list(self.positive_combination_test),batch_size)
+  
     positive_sample = np.array(positive_sample)
 
 ##pick some random negative sample        
-    negative_sample = random.sample(self.negative_combination_test,batch_size)
+    negative_sample = random.sample(list(self.negative_combination_test),batch_size)
     negative_sample = np.array(negative_sample)
 ###load the samples from the hdf5 file      
     sample_left = positive_sample[:,0]
@@ -419,7 +419,7 @@ def main():
     feed_dict = {siamese_object.x1:image_left,siamese_object.x2:image_right,siamese_object.tf_train_labels:label,siamese_object.keep_prob:1.0,siamese_object.is_training:True}
     _,loss = sess.run([siamese_object.train_step,siamese_object.loss_value],feed_dict=feed_dict)
     if(num_iteration % 1000 == 0):
-      print("training loss_value %f,%d" % (loss,num_iteration))
+      print(" training loss_value {}, {}".format(loss, num_iteration))
       loss_val_train.append(loss)
       image_left_test,image_right_test,label_test = siamese_object.load_test_batch(100)
       feed_dict = {siamese_object.x1:image_left_test,siamese_object.keep_prob:1.0,siamese_object.is_training:False}
@@ -435,8 +435,7 @@ def main():
       loss_val_test.append(l)
       test_accuracy = accuracy(test_predictions, label_test)
       accuracy_test.append(test_accuracy)
-      print("test loss_value %f,%d" % (l,num_iteration))
-      
+      print("test loss_value {}, {}".format(l, num_iteration))
     if(num_iteration % model_iteration == 0 and num_iteration > 0):
       filename_save = path_to_store_models + model_name + '_' + str(num_iteration) + '.ckpt'
       saver.save(sess, filename_save)

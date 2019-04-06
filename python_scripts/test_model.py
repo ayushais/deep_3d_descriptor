@@ -29,7 +29,6 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 from operator import itemgetter
-from sys import argv
 import argparse
 import os
 FLAGS = None
@@ -66,11 +65,11 @@ def main():
     positive_combination_test = np.loadtxt('positive_combination_testing.txt',delimiter=",")
     negative_combination_test = np.loadtxt('negative_combination_testing.txt',delimiter=",")
     hdf5_file = h5py.File(testing_data_file_path,  "r")  
-    a_group_key_data = hdf5_file.keys()[0]
+    a_group_key_data = list(hdf5_file.keys())[0]
     data_d_test = list(hdf5_file[a_group_key_data])
     test_data = np.array(data_d_test)
     test_data = np.transpose(test_data,(0,2,3,1))
-    a_group_key_label = hdf5_file.keys()[1]
+    a_group_key_label = list(hdf5_file.keys())[1]
     data_l_test = list(hdf5_file[a_group_key_label])
     test_label_data = np.array(data_l_test)
     print(test_label_data.shape)
@@ -180,7 +179,8 @@ def main():
     min_list = abs(TP_vec - 0.95)## for finding the index closest to TPR at 95%
     results = np.concatenate((TP_vec,FP_vec),axis = 1)
 ####storing TPR and FPR for plotting the curve
-    print('fpr_score %f'%FP_vec[min(enumerate(min_list), key=itemgetter(1))[0]])
+    print("fpr_score {}".format(FP_vec[min(enumerate(min_list),
+      key=itemgetter(1))[0]]))
     save_file = path + '/' + filename + '.csv'
     np.savetxt(save_file,results,delimiter=',',fmt='%10.5f')
     plt.figure(2)

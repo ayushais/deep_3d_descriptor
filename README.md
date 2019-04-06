@@ -17,7 +17,8 @@ This software is released under GPLv3. If you use it in academic work, please ci
   author = {Ayush Dewan and Tim Caselitz and Wolfram Burgard},
   title = {Learning a Local Feature Descriptor for 3D LiDAR Scans},
   booktitle = {Proc.~of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
-  year = 2018,
+  address = {Madrid, Spain},
+  year = {2018},
   url = {http://ais.informatik.uni-freiburg.de/publications/papers/dewan18iros.pdf}
 }
 ```
@@ -28,7 +29,7 @@ This software is released under GPLv3. If you use it in academic work, please ci
 ### 2.1. Prerequisites
 
 * Tensorflow
-* Pyhton 2.7
+* Pyhton 3.4
 * H5py
 
 ### 2.2. Dataset
